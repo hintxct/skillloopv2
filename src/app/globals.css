@@ -7031,6 +7031,9 @@ small,
 .chat-list-item.is-group.active {
   background: #a48bf51a;
 }
+.message.sending {
+  opacity: 0.65;
+}
 .incoming-call-overlay {
   position: fixed;
   inset: 0;

@@ -949,12 +949,27 @@ export default function SkillLoop() {
                 <ShieldCheck size={18} />
                 <span>
                   Requests live in this workspace only. If the other person
-                  can’t see your request, open{" "}
-                  <b>Demo → Generate shared workspace link</b> and have them
-                  join the same workspace — separate registrations create
-                  separate workspaces. Register once, then use <b>Login</b> with
-                  the same email/phone + password on any device.
+                  can’t see your request, share this workspace — separate
+                  registrations create separate workspaces. Register once,
+                  then use <b>Login</b> with the same email/phone + password
+                  on any device.
                 </span>
+                <button
+                  className="button secondary"
+                  style={{ flexShrink: 0 }}
+                  onClick={() =>
+                    safe(async () => {
+                      const result = await api<{ token: string }>(
+                        "invite",
+                        {},
+                      );
+                      const link = `${window.location.origin}/?invite=${encodeURIComponent(result.token)}`;
+                      await navigator.clipboard.writeText(link);
+                    }, "Workspace link copied — open it on the other device")
+                  }
+                >
+                  <Link2 size={14} /> Copy invite link
+                </button>
               </div>
               <RequestsPanel
                 state={state}

@@ -752,8 +752,9 @@ export function ChatPanel({
     if (!draft.trim() || !c) return;
     const text = draft.trim();
     const current = selected;
-    clientId.current ||= crypto.randomUUID();
-    const cid = clientId.current;
+    // Fresh id per bubble so rapid sends never collide; reused on retry for dedup
+    const cid = crypto.randomUUID();
+    clientId.current = cid;
     // Optimistic: show instantly for smooth 1-to-1 feel
     const optimistic: Message = {
       id: `temp-${cid}`,
@@ -775,8 +776,8 @@ export function ChatPanel({
         text,
         clientId: cid,
       });
+      clientId.current = "";
       if (selectedRef.current === current) {
-        clientId.current = "";
         const result = await api<{ messages: Message[] }>(
           `messages?id=${current}`,
         );
@@ -786,7 +787,8 @@ export function ChatPanel({
         }
       }
     } catch (e) {
-      // Roll back optimistic on failure so the bubble doesn't lie
+      // Keep cid for safe retry (server dedups by clientId); roll back bubble
+      clientId.current = cid;
       if (selectedRef.current === current) {
         setMessages((prev) => prev.filter((m) => m.clientId !== cid));
         setDraft(text);
@@ -800,6 +802,47 @@ export function ChatPanel({
     ? state.users.find((u) => c.members.includes(u.id) && u.id !== state.me.id)
     : undefined;
   const isGroup = (c?.members.length ?? 0) > 2;
+  // Demo-proof: if nothing selected and a new unread chat arrives, open it
+  // so the other device clearly sees the message without hunting the list.
+  useEffect(() => {
+    if (selected) return;
+    const firstUnread = state.conversations.find((x) => x.unread > 0);
+    if (firstUnread) setSelected(firstUnread.id);
+  }, [selected, state.conversations, setSelected]);
+  // Short blip on incoming message (not on own sends, not on first load)
+  const prevLastRef = useRef<string>("");
+  useEffect(() => {
+    const last = messages.at(-1);
+    if (!last || last.senderId === state.me.id) {
+      if (last) prevLastRef.current = last.id;
+      return;
+    }
+    if (prevLastRef.current && prevLastRef.current !== last.id) {
+      try {
+        const AC =
+          window.AudioContext ||
+          (
+            window as unknown as {
+              webkitAudioContext: typeof AudioContext;
+            }
+          ).webkitAudioContext;
+        const ctx = new AC();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+        osc.onended = () => void ctx.close();
+      } catch {}
+    }
+    prevLastRef.current = last.id;
+  }, [messages, state.me.id]);
   const others = c
     ? state.users.filter(
         (u) => c.members.includes(u.id) && u.id !== state.me.id,
@@ -923,15 +966,17 @@ export function ChatPanel({
               </div>
               {messages.map((m) => (
                 <div
-                  className={`message ${m.senderId === state.me.id ? "mine" : ""}`}
+                  className={`message ${m.senderId === state.me.id ? "mine" : ""} ${m.id.startsWith("temp-") ? "sending" : ""}`}
                   key={m.id}
                 >
                   <p>{m.text}</p>
                   <small>
-                    {new Date(m.createdAt).toLocaleTimeString("en", {
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
+                    {m.id.startsWith("temp-")
+                      ? "Sending…"
+                      : new Date(m.createdAt).toLocaleTimeString("en", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
                   </small>
                 </div>
               ))}
@@ -952,18 +997,20 @@ export function ChatPanel({
             <form className="message-composer" onSubmit={send}>
               <input
                 aria-label="Your message"
-                placeholder="A little hello, a big possibility…"
+                placeholder={
+                  sending
+                    ? "Sending… keep typing, it will go"
+                    : "A little hello, a big possibility…"
+                }
                 value={draft}
                 maxLength={3000}
                 onChange={(e) => {
                   setDraft(e.target.value);
-                  clientId.current = "";
                 }}
-                disabled={sending}
               />
               <button
                 className="button primary"
-                disabled={sending || !draft.trim()}
+                disabled={!draft.trim()}
                 aria-label="Send message"
               >
                 <Send size={18} />
