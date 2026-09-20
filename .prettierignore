@@ -1,0 +1,11 @@
+node_modules
+.next
+.data
+package-lock.json
+test-results
+playwright-report
+public/flags
+next-env.d.ts
+*.log
+*.tsbuildinfo
+.vercel

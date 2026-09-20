@@ -1,0 +1,7 @@
+.data
+.env*
+!.env.example
+*.log
+*.tsbuildinfo
+test-results
+playwright-report

@@ -1,0 +1,163 @@
+import { mkdirSync } from "node:fs";
+import { join } from "node:path";
+import type { DatabaseSync } from "node:sqlite";
+import type { Pool, PoolClient } from "pg";
+
+type Row = { data: string; expires_at: string | number | null };
+type Globals = typeof globalThis & {
+  slPool?: Pool;
+  slSqlite?: DatabaseSync;
+  slQueue?: Promise<void>;
+};
+const globals = globalThis as Globals;
+export const SCHEMA = `CREATE TABLE IF NOT EXISTS sl_records (
+  kind TEXT NOT NULL, id TEXT NOT NULL, data TEXT NOT NULL, expires_at BIGINT,
+  PRIMARY KEY (kind, id)
+); CREATE INDEX IF NOT EXISTS sl_records_expiry ON sl_records(expires_at);`;
+
+export interface Store {
+  get<T>(kind: string, id: string): Promise<T | null>;
+  put(
+    kind: string,
+    id: string,
+    value: unknown,
+    expires?: number,
+  ): Promise<void>;
+  remove(kind: string, id: string): Promise<void>;
+}
+
+export function backendName() {
+  return process.env.DATABASE_URL
+    ? "PostgreSQL · shared backend"
+    : "SQLite · local development";
+}
+
+async function pool() {
+  if (!globals.slPool) {
+    const { Pool } = await import("pg");
+    globals.slPool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      max: 3,
+      idleTimeoutMillis: 10000,
+      connectionTimeoutMillis: 10000,
+      query_timeout: 10000,
+      statement_timeout: 10000,
+      idle_in_transaction_session_timeout: 15000,
+    });
+    globals.slPool.on("error", () => {
+      console.error(
+        "SkillLoop: an idle PostgreSQL connection failed. Check database availability.",
+      );
+    });
+  }
+  return globals.slPool;
+}
+
+async function sqlite() {
+  if (process.env.VERCEL)
+    throw new Error(
+      "SETUP: Connect a PostgreSQL database, set DATABASE_URL, and run npm run db:migrate before using this deployment.",
+    );
+  if (!globals.slSqlite) {
+    const { DatabaseSync } = await import("node:sqlite");
+    mkdirSync(join(process.cwd(), ".data"), { recursive: true });
+    globals.slSqlite = new DatabaseSync(
+      join(process.cwd(), ".data", "skillloop.sqlite"),
+    );
+    globals.slSqlite.exec("PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;");
+    globals.slSqlite.exec(SCHEMA);
+  }
+  return globals.slSqlite;
+}
+
+function adapter(client: PoolClient | DatabaseSync, postgres: boolean): Store {
+  async function query(sql: string, values: (string | number | null)[]) {
+    if (postgres)
+      return (await (client as PoolClient).query(sql, values)).rows as Row[];
+    const statement = (client as DatabaseSync).prepare(
+      sql.replace(/\$\d+/g, "?"),
+    );
+    if (sql.startsWith("SELECT"))
+      return statement.all(...values) as unknown as Row[];
+    statement.run(...values);
+    return [];
+  }
+  return {
+    async get<T>(kind: string, id: string) {
+      const [row] = await query(
+        "SELECT data, expires_at FROM sl_records WHERE kind=$1 AND id=$2",
+        [kind, id],
+      );
+      if (
+        !row ||
+        (row.expires_at !== null && Number(row.expires_at) < Date.now())
+      )
+        return null;
+      return JSON.parse(row.data) as T;
+    },
+    async put(kind, id, value, expires) {
+      await query(
+        "INSERT INTO sl_records (kind,id,data,expires_at) VALUES ($1,$2,$3,$4) ON CONFLICT (kind,id) DO UPDATE SET data=excluded.data, expires_at=excluded.expires_at",
+        [kind, id, JSON.stringify(value), expires ?? null],
+      );
+    },
+    async remove(kind, id) {
+      await query("DELETE FROM sl_records WHERE kind=$1 AND id=$2", [kind, id]);
+    },
+  };
+}
+
+// A single transaction lock deliberately prioritises correctness for the small demo.
+// Production scaling should normalise entities and use per-room/booking row locks.
+export async function transaction<T>(
+  work: (store: Store) => Promise<T>,
+): Promise<T> {
+  if (process.env.DATABASE_URL) {
+    const client = await (await pool()).connect();
+    try {
+      await client.query("BEGIN");
+      await client.query("SELECT pg_advisory_xact_lock(734001)");
+      const result = await work(adapter(client, true));
+      await client.query("COMMIT");
+      return result;
+    } catch (error) {
+      await client.query("ROLLBACK").catch(() => undefined);
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+  const previous = globals.slQueue ?? Promise.resolve();
+  let release!: () => void;
+  globals.slQueue = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await previous;
+  let db: DatabaseSync | undefined;
+  try {
+    db = await sqlite();
+    db.exec("BEGIN IMMEDIATE");
+    const result = await work(adapter(db, false));
+    db.exec("COMMIT");
+    return result;
+  } catch (error) {
+    if (db?.isTransaction) db.exec("ROLLBACK");
+    throw error;
+  } finally {
+    release();
+  }
+}
+
+export async function migrate() {
+  if (process.env.DATABASE_URL) {
+    const p = await pool();
+    try {
+      await p.query(SCHEMA);
+    } finally {
+      await p.end();
+      globals.slPool = undefined;
+    }
+  } else {
+    await sqlite();
+  }
+}
