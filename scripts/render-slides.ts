@@ -42,7 +42,7 @@ async function main() {
       "Bundled fonts must load",
     );
     const slides = page.locator(".slide");
-    assert.equal(await slides.count(), 8);
+    assert.equal(await slides.count(), 6);
     const files: {
       name: string;
       width: number;
@@ -113,13 +113,13 @@ async function main() {
     const pdf = await readFile(resolve(folder, "SkillLoop-slides.pdf"));
     assert.equal(
       (pdf.toString("latin1").match(/\/Type\s*\/Page\b/g) ?? []).length,
-      8,
-      "PDF must have exactly eight pages",
+      6,
+      "PDF must have exactly six pages",
     );
     assert.deepEqual(errors, [], "No render or resource errors");
     await page.setViewportSize({ width: 1600, height: 790 });
     await page.setContent(
-      `<!doctype html><html><head><title>SkillLoop slide overview</title><style>body{margin:0;padding:32px;background:#dedbe6;font-family:Arial,sans-serif;color:#302740}h1{margin:0 0 24px;font-size:30px}main{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}figure{margin:0}img{display:block;width:100%;height:auto;border-radius:8px}figcaption{font-size:18px;margin-top:8px}p{font-size:23px;line-height:1.5;padding:22px}</style></head><body><h1>SkillLoop · Eight presentation slides · 1920 × 1080</h1><main>${thumbnails.join("")}<p>Eight readable slides.<br />Implemented features + badges & leaderboard.<br />PNG images + presentation PDF.</p></main></body></html>`,
+      `<!doctype html><html><head><title>SkillLoop slide overview</title><style>body{margin:0;padding:32px;background:#dedbe6;font-family:Arial,sans-serif;color:#302740}h1{margin:0 0 24px;font-size:30px}main{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}figure{margin:0}img{display:block;width:100%;height:auto;border-radius:8px}figcaption{font-size:18px;margin-top:8px}p{font-size:23px;line-height:1.5;padding:22px}</style></head><body><h1>SkillLoop · Six presentation slides · 1920 × 1080</h1><main>${thumbnails.join("")}<p>Six readable slides (points only, site-only).<br />PNG images + presentation PDF.</p></main></body></html>`,
     );
     await page
       .locator("img")
@@ -150,14 +150,14 @@ async function main() {
           slides: files,
           sources,
           validation:
-            "8 slides; bundled fonts; no external requests; no clipped text boxes; PNG dimensions checked",
+            "6 slides; bundled fonts; no external requests; no clipped text boxes; PNG dimensions checked",
         },
         null,
         2,
       ) + "\n",
     );
     console.log(
-      "Validated eight slides; exported PDF, overview.jpg and manifest.json.",
+      "Validated six slides; exported PDF, overview.jpg and manifest.json.",
     );
   } finally {
     await browser.close();

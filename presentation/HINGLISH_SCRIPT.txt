@@ -1,314 +1,139 @@
 ================================================================================
- SKILLOOP — HINGLISH PRESENTATION SCRIPT (A to Z)
- 8 Slides · Problem → Solution → How It Works → Badges → Leaderboard → Features → Impact
- Language: Hinglish (Roman Hindi + English) · Duration: 8-10 minutes
+ SKILLOOP — HINGLISH PRESENTATION SCRIPT (6 Slides, Points Only, Site-Only)
+ Duration: 6-7 minutes · From Good Morning to Thank You
 ================================================================================
 
-[BEFORE START - Setup]
-- PPT open rakho: presentation/index.html ya SkillLoop-slides.pdf
-- Browser me http://localhost:3000 bhi open rakho for live demo
-- Mic check, Good Morning se start karna hai
+[SETUP]
+- PPT: presentation/index.html ya SkillLoop-slides.pdf (6 slides, 1920×1080)
+- Live demo: https://skillloopv2.vercel.app (DEMO_MODE=true, in-memory demo)
+- One-click demo login ready rakho
 
 --------------------------------------------------------------------------------
-SLIDE 01 — COVER : "Where curiosity becomes momentum"
+SLIDE 01 — TITLE: Team + Project Rough Idea
 --------------------------------------------------------------------------------
+"Good morning judges, mentors and friends.
 
-SCRIPT:
-"Good morning everyone, respected judges, mentors and fellow participants.
+Mera naam [Your Name] hai, Team SkillLoop se. Hamara project hai SkillLoop —
+tagline: 'A little give, a lot to learn.'
 
-Mera naam [Your Name] hai, aur aaj mai aapko dikhane ja raha hu SkillLoop —
-ek aisi platform jahan 'A little give, a lot to learn.'
+Rough idea points me:
+• Ek hi account se aap learner bhi, teacher bhi — isolated demo workspaces me.
+• Publish karo skill with outcome → discover karo → request bhejo → time agree karo → learn karo → record rakho.
+• 3 tareeke: free session, direct swap (2 alag lessons), paid mentorship (100 demo credits, 15-min hold, real money nahi).
+• Jab 2-way match nahi banta, tab 3-person Trade Circle — 3 alag 1-to-1 lessons.
+• Motivation ke liye 12 badges + XP/level aur leaderboard — weekly, monthly, last 7 days.
 
-Dekhiye, cover pe hi aapko hamara vibe samajh ayega — ek taraf Python sikhana,
-dusri taraf Guitar seekhna, aur beech me ek loop jo sabko connect karta hai.
+Tech: Next.js 16, React 19, TypeScript. Desktop-first, responsive. English interface.
 
-SkillLoop ek browser-based demo platform hai jahan ek hi account se aap teacher
-bhi ban sakte ho aur learner bhi. Humare paas already 12 badges, 3 leaderboards
-aur 7 skill categories live hai — ye sab actual implemented features hai, sirf
-idea nahi.
-
-Chaliye, pehle problem samajhte hain — kyunki solution tabhi samajh ayega jab
-problem clear ho."
-
-[Transition: Next slide]
+Chaliye problem dekhte hain."
 
 --------------------------------------------------------------------------------
-SLIDE 02 — PROBLEM : "Skills are everywhere. The right connection isn't."
+SLIDE 02 — PROBLEM STATEMENT
 --------------------------------------------------------------------------------
+"Problem kya hai — points me, jo site actually address karti hai:
 
-SCRIPT:
-"Problem kya hai? Aaj kal skills ki kami nahi hai — YouTube pe, Instagram pe,
-har jagah log kuch na kuch sikha rahe hain.
+• Skill dhoondhna scattered hai — chats/posts me sahi banda nahi milta.
+• 2-person swap fail hota hai jab wants align nahi (Asha teaches Python, wants Guitar; Cara teaches Design, wants Python — ≠).
+• Ek jagah nahi jahan outcome, language, duration, delivery (online/in-person) aur time ek saath agree ho.
+• Sirf attendance se pata nahi chalta — kya seekha, kya banaya.
+• Time-zone aur scheduling conflicts se lessons miss.
+• Public posts se lesson reserve nahi hota, commitment nahi banta.
 
-Lekin dikkat ye hai:
-
-Pehla — Scattered discovery. Aapko Python wala chahiye, lekin group chats aur
-random posts me aapko sahi banda dhoondhna mushkil hai. Koi central jagah nahi
-jahan aap skill, language ya outcome se search kar sako.
-
-Dusra — Non-reciprocal wants. Example dekho — Asha Python sikhati hai aur Guitar
-seekhna chahti hai. Cara Design sikhati hai aur Python seekhna chahti hai. Ye
-direct swap nahi banega, kyunki wants match nahi kar rahe. 'A ≠ C' — ye mismatch
-bahut common hai.
-
-Teesra — Messy agreement. Alag time zones, alag languages, 15 se 120 minutes
-tak ke durations — bina conflict check ke lessons miss ho jate hain.
-
-Chautha — No proof of learning. Sirf attendance se pata nahi chalta ki banda
-ne actually kya banaya, kya seekha.
-
-Isiliye humne SkillLoop banaya — ek single place jahan ye sab solve ho."
-
-[Transition: Next slide]
+Framing hai, survey claim nahi. Isiliye SkillLoop."
 
 --------------------------------------------------------------------------------
-SLIDE 03 — SOLUTION : "One place to discover, agree, learn and get recognized"
+SLIDE 03 — SOLUTION
 --------------------------------------------------------------------------------
+"Solution — One place to publish, discover, agree and record. Points:
 
-SCRIPT:
-"Solution simple hai — hamara tagline hai: 'Share something you know, learn
-something you need — and keep a record.'
+• Ek account = learner + teacher.
+• Publish skill: title 5–90, category (Other included), outcome 10–300, tags 1–8 unique, duration 15–120, online/in-person, proof link.
+• Discover: search title/description/tag/@username; filters category/language/offer/delivery; tabs Discover/Skill trades/Free; saved skills; learning-request posts.
+• Arrange: free · direct swap (2 separate times, both confirm) · paid mentorship (demo credits, 100 start, hold 15 min, no purchase).
+• Agree: request → accept/decline/counter time → scheduled; server checks conflicts; reschedule before attendance.
+• Learn: chat (polling 3s, need accept), external meeting link (teacher), attendance both confirm, evidence 10–2000 (learner) + feedback (teacher), reviews 1–5 (5–700, one per booking).
+• Motivate: 12 badges + XP + leaderboard windows.
 
-SkillLoop pe 3 tareeke se lesson arrange hota hai:
-
-1. Free session — bina credits ya swap ke, bas sikhane ke liye.
-2. Direct skill swap — do log, do alag lessons. Asha Ben ko Python sikhayegi,
-   Ben Asha ko Guitar — do alag time slots.
-3. Paid mentorship — demo credits se. Har naya user ko 100 demo credits milte
-   hain, ye real money nahi hai, sirf simulation hai, 15-minute hold ke saath.
-
-Aur jo sabse unique hai — Trade Circles. Jab do logon ka match nahi banta, to
-teen logon ka loop banta hai. Asha → Cara (Python), Cara → Ben (Design), Ben → Asha
-(Guitar). Teen alag 1-to-1 lessons, ek group call nahi.
-
-Flow dekho: Publish skill → Discover → Request & consent → Learn & confirm →
-Badge + XP earn karo. Aur naya kya hai? Badges aur Leaderboard.
-
-Har action pe badge milta hai — 12 badges, alag rarity — common, rare, epic,
-legendary. Aur Leaderboard pe live ranks — Last 7 days, Weekly (Monday to Sunday)
-aur Monthly — teeno windows. Isse motivation aata hai, shaming nahi."
-
-[Transition: Next slide]
+Isolated demo workspaces — ye global marketplace nahi hai."
 
 --------------------------------------------------------------------------------
-SLIDE 04 — HOW IT WORKS + TERMINOLOGY : "From browser to database — no magic"
+SLIDE 04 — KEY FEATURES (Implemented Only)
 --------------------------------------------------------------------------------
+"Key features — jo aaj kaam karta hai, points me:
 
-SCRIPT:
-"Ab thoda technical, lekin simple language me — How it works?
+01 Account & profile — 18+ check; password 10–128; 6-digit code 5 min, on-screen (no email/SMS); avatar 512KB; username 3–24 unique per workspace; languages, timezone, wants 1–10, socials; persona switch + 1-hour invite; logout.
 
-Hamara stack ek hi full-stack app hai: Browser (React 19 + TypeScript, desktop-
-first but responsive), phir Next.js API (Zod validation, ownership check, time
-slot conflict check), aur phir Database (local pe SQLite, production pe
-PostgreSQL, transactions ke saath, chat polling se).
+02 Skill management — create/edit/pause/reuse; Other category; tag chips Enter/+; max 20 per user; soft delete (history stays), block if open booking/swap return/circle inviting/active.
 
-Koi AI magic nahi, koi video call ka jhooth nahi — sab rule-based aur explainable.
+03 Discovery — search skill+people (@); filters; saved skills.
 
-Terminology samajh lo, taaki demo me confuse na ho:
+04 Bookings — tabs incoming/sent/upcoming/completed/closed; counter-time; reschedule; attendance both needed; swap needs both lessons.
 
-- Skill listing — Title, Category (Dev, Design, Languages, Music, Business etc),
-  Level, Teaching language, Duration 15-120 min, Online/In-person, Tags 1-8,
-  Outcome 10-300 characters. Proof link optional hota hai.
+05 Trade Circles — rule: 3 distinct, online, same language, exact tag↔want, no blocked pair; 1/3→2/3→3/3 consent; then 3 bookings; withdraw cancels remaining.
 
-- Booking — Status hota hai: pending → countered → awaiting-payment (15 min) →
-  scheduled → completed / declined / cancelled / expired. Reschedule bhi kar sakte
-  ho agar attendance confirm nahi hua.
+06 Chat & records — 1 intro → accept; polling; 500 msgs/convo, 100 loaded; unread; meeting link; evidence+feedback; reviews.
 
-- Trade Circle — 3 alag log, sab online, same language, exact tag-want match.
-  1/3, 2/3, 3/3 consent — teeno agree karenge tabhi 3 bookings active hongi.
+07 Badges NEW — 12 badges, common/rare/epic, how to earn clearly shown (e.g., 3 teaches, 1 circle, 5★); XP sum, Level floor(XP/200)+1.
 
-- Badge — 12 badges, har ek ka alag kaam. Example: Trailblazer (first skill),
-  First Spark (first session). Har badge ka XP 50 se 250 tak.
+08 Leaderboard NEW — Weekly Mon-Sun UTC / Monthly / Last 7 days rolling; points: +40 completed (+15 trade +20 circle) +25 skill +50 5★ +2 msg cap20 +15 post; podium + table.
 
-- Leaderboard — Points system: Completed lesson +40 (+15 trade, +20 circle),
-  Skill share +25, 5-star review +50, Message +2 (max 20), Post +15. Points har
-  window me reset, lekin XP hamesha rahega.
-
-- XP aur Level — XP = saare earned badges ka sum. Level = floor(XP/200)+1.
-  Simple.
-
-Callout dekho: Publish → Discover → Request → Agree → Learn → Recognize — yehi
-hamara loop hai."
-
-[Transition: Next slide]
+Jo nahi hai: AI, video, real money, escrow, moderation panel — openly batate hain."
 
 --------------------------------------------------------------------------------
-SLIDE 05 — BADGES : "12 Ways to Earn — Collect Moments"
+SLIDE 05 — HOW WE DOING IT, TERMINOLOGY
 --------------------------------------------------------------------------------
+"How we do it + terminology — points:
 
-SCRIPT:
-"Ab sabse sexy feature — Badges. Ye sirf sticker nahi, ye proof hai ki aapne
-kya kiya.
+How:
+• Stack: Next.js 16, React 19, TypeScript; SQLite local / Postgres prod / In-memory on Vercel demo (ephemeral).
+• One project frontend+API; DB transactions for bookings/credits/messages; advisory lock for demo.
+• Polling 5s state, 3s chat; no WebSocket, no E2E encryption.
+• Limits: posts 150, circles 30, bookings 250 per workspace; build/typecheck/tests pass.
 
-12 badges hai, aur har ek ka 'How to Earn' bilkul clear hai — slide pe dekho:
+Terminology:
+• Skill listing — as above.
+• Booking states — pending → countered → awaiting-payment (15m) → scheduled → completed / declined / cancelled / expired.
+• Trade Circle — 3 people, 3 skills, 3 pairwise lessons, exact match, 3/3 consent.
+• Badge — 12, earned by action, tier common/rare/epic, XP 40–250.
+• XP/Level — XP sum badges; Level floor(XP/200)+1; XP forever, points per window.
+• Leaderboard — 3 windows as above; sorted points → XP → name.
+• Workspace — isolated seeded demo; shared via 1-hour link; not global.
+• Credits — fictional integer (100 = 1 credit); no purchase/withdrawal.
 
-Common tier — Easy start:
-- Trailblazer — Pehli skill publish karo, Share a skill se (+50 XP)
-- First Spark — Pehla session complete karo, dono attendance confirm (+80 XP)
-- Show & Tell — Learner banke evidence submit karo (10-2000 chars, +40 XP)
-- Sharp Reviewer — Teacher banke feedback do (+40 XP)
-- Conversation Starter — 3 alag chats me message bhejo (+60 XP)
-
-Rare tier — Thoda effort:
-- Skill Collector — 3 alag skills publish karo (+120 XP)
-- Curious Mind — 3 sessions learner banke complete karo (+150 XP)
-- Generous Mentor — 3 sessions teacher banke complete karo (+150 XP)
-- Swap Champion — Direct 2-person trade complete karo, dono lessons confirm
-  (+100 XP)
-
-Epic / Mastery — Pro level:
-- Dedicated Sage — 5 sessions teacher banke (+250 XP)
-- Loop Closer — Ek Trade Circle pura close karo, teeno lessons (+200 XP)
-- Crowd Favorite — 5-star review receive karo (+180 XP)
-
-Har badge pe rarity ka color hai — grey for common, purple for rare, pink for
-epic, gold for legendary. Aur profile pe progress dikhta hai — 1/3, 2/3 jaise.
-
-Level bar dekho — Level 4 pe 740 XP, 60 XP aur chahiye Level 5 ke liye. Yehi
-motivation hai — chote wins, lamba impact."
-
-[Pause, let audience see grid]
-
-"Har badge platform recognition hai, accredited certificate nahi — demo workspace
-ki baat hai, ye hum clearly batate hain."
-
-[Transition: Next slide]
+Flow: Publish → Discover → Request → Agree → Learn → Record → Recognize."
 
 --------------------------------------------------------------------------------
-SLIDE 06 — LEADERBOARD : "Climb by learning, teaching and helping others"
+SLIDE 06 — INNOVATION & IMPACT
 --------------------------------------------------------------------------------
+"Innovation — points:
 
-SCRIPT:
-"Next, Leaderboard — kyunki healthy competition bhi zaroori hai.
+• Beyond perfect 2-way: 3-way loops se impossible swaps possible, rule-based exact match, no AI.
+• Unanimous consent — 3/3 pe hi 3 bookings active, time-conflict checks.
+• Proof beyond attendance — separate evidence + peer feedback → reviews.
+• Motivation without money — clear how-to-earn badges + live windows.
+• One codebase, seeded workspaces for parallel demo without real data.
 
-Hamare paas 3 windows hai, upar segmented control me dekho:
+Impact & benefits — points, demo only:
 
-- Last 7 days — rolling 7 din, live.
-- Weekly — Monday se Sunday, UTC, har Monday reset.
-- Monthly — Calendar month, har 1st ko reset.
+• Learner: exact outcome/language find karo; knowledge se pay karo jab possible; badges/minutes/reviews se visible progress.
+• Teacher: ek skill se kai learners; recognition + leaderboard momentum; feedback se improve.
+• Community: impossible swaps via loops; chat learning se juda; safe demo (isolated, fictional data, help & safety).
+• Honest: platform recognition, not accredited cert; no real payments; no staffed moderation; workspace expiry.
 
-Kaise rank hota hai? Points se. Points kaise milte hain — slide ke neeche dekho:
+Closing line: 'Share what you know, learn what you need, keep a record.' — yehi demonstrated capability hai, measured social impact ka claim nahi.
 
-Completed lesson +40, agar trade hai to +15 extra, circle hai to +20 extra.
-Skill share +25, 5-star review +50, Message +2 (max 20 taki spam na ho), Post +15.
-Points har window me reset ho jate hain, lekin XP aur badges hamesha rahenge —
-isliye koi permanent shaming nahi, har week naya chance.
-
-Podium dekho — #2, #1, #3. #1 pe crown hai. Asha 320 points, Ben 286, Cara 264 —
-ye example data hai, live workspace me aapka rank alag hoga.
-
-Neeche table me #4 pe 'You' dikh raha hai — 180 points, 3 sessions, Level 3.
-Aapka rank hamesha highlight rahega, chahe top 3 me na ho.
-
-Sorting: Points → XP → Name. Aur ye sirf demo workspace ka ranking hai, global
-ranking nahi — kyunki har naya account apna isolated workspace banata hai.
-
-Ye feature kyun? Kyunki jab aap dekhte ho ki last 7 din me Asha ne 3 sessions
-kiye, to aapko bhi lagta hai — 'Mujhe bhi karna chahiye.' Motivation without
-tuition."
-
-[Transition: Next slide]
-
---------------------------------------------------------------------------------
-SLIDE 07 — KEY FEATURES : "What actually works today"
---------------------------------------------------------------------------------
-
-SCRIPT:
-"Ab quick overview — Kya actually kaam karta hai aaj, whitepaper ke hisaab se.
-
-8 boxes dekho:
-
-1. Account & profile — 18+ age check, password 10-128 chars, demo inbox me 6-digit
-   code (5 min expiry, no real email/SMS), avatar 512KB, timezone, languages,
-   wants 1-10.
-
-2. Skill management — Create, edit, pause, reuse. Har user max 20 skills. 'Other'
-   category bhi hai. Tags 1-8, soft delete — completed history safe rahega.
-
-3. Discovery — Title, description, tag, @username se search. Filters: category,
-   language, offer type, delivery. Saved skills bhi.
-
-4. Bookings — Free, paid (100 credits start), trade. States jo pehle bataye,
-   reschedule bhi possible agar attendance nahi hua.
-
-5. Trade Circles — Rule-based exact match, unanimous consent, 3 bookings.
-
-6. Chat & records — Polling chat, 5 sec state refresh, 3 sec chat refresh.
-   500 msgs per convo, last 100 dikhte hain. Attendance (dono confirm), evidence
-   (learner), feedback (teacher), reviews (1-5 stars, 5-700 chars).
-
-7. Badges NEW — 12 badges, XP, Level floor(XP/200)+1, profile aur badges page
-   pe visible.
-
-8. Leaderboard NEW — Weekly / Monthly / Last 7 days, podium + table + your rank.
-
-Limits bhi batana zaroori hai: Posts 150, circles 30, bookings 250 per workspace.
-Kya nahi hai? Real money, video call, AI matching, escrow, moderation panel —
-ye sab nahi hai, aur hum openly batate hain."
-
-[Transition: Next slide]
-
---------------------------------------------------------------------------------
-SLIDE 08 — IMPACT & BENEFITS : "Small, clear wins that compound"
---------------------------------------------------------------------------------
-
-SCRIPT:
-"Last slide — Impact aur Benefits. Hum bada claim nahi karenge, jo demo me
-hai wahi batayenge. Hamara core idea hai: 'Share something you know, learn
-something you need.'
-
-Learners ke liye benefit:
-- Exact skill + outcome dhoondh sakte ho, paise se zyada knowledge se pay kar sakte ho.
-- Badges aur minutes se progress visible hota hai.
-
-Teachers ke liye:
-- Ek skill share karke kai logon tak pahunch sakte ho.
-- Recognition aur leaderboard se motivation milta hai.
-- Feedback loop se teaching improve hoti hai.
-
-Community ke liye:
-- 3-way loops se woh swaps possible hote hain jo pehle impossible lagte the.
-- Chat learning se juda rehta hai, random DM nahi.
-- Safe demo — isolated workspaces, koi real personal data nahi.
-
-Benefit bar dekho: Motivation without tuition · Proof beyond attendance ·
-Healthy competition via windows.
-
-Next steps kya hain? Verified deployment (Vercel + PostgreSQL abhi unverified hai),
-moderation, calendar sync, media attachments — ye future ka kaam hai, aaj ka demo
-is beyond nahi.
-
-Toh dosto, SkillLoop ek working, desktop-first, responsive demo hai — Next.js,
-React, TypeScript pe bana hua, SQLite local, PostgreSQL prod support ke saath.
-Accounts aur workflows functional hain, lekin contact verification aur credits
-simulated hain. Har naya account alag seeded workspace banata hai, invitation se
-dusra banda same workspace me aa sakta hai.
-
-Yehi hamara implemented current product hai — future roadmap ka sapna nahi.
-
-Thank you so much! Agar aapko live demo dekhna hai, to mai abhi
-http://localhost:3000 pe dikha sakta hu — SkillLoop pe ek skill publish karna,
-ek Trade Circle banana, ek badge earn karna, aur leaderboard pe rank dekhna.
+Thank you. Live demo dikhaun? http://skillloopv2.vercel.app pe One-click demo login se Asha→Cara→Ben wala loop, badge aur leaderboard live dekh sakte hain.
 
 Any questions?"
 
-[END - Q&A]
-
---------------------------------------------------------------------------------
-TIPS FOR PRESENTER (Hinglish me hi)
---------------------------------------------------------------------------------
-1. Har slide pe 45-60 sec max rukna, zyada text mat padhna — visual ko point
-   karo.
-2. Badges slide pe ek badge ka example live dikhao — 'Trailblazer kaise milta
-   hai' — Share a skill pe click karo.
-3. Leaderboard slide pe 'Weekly vs Last 7 days' ka difference explain karo —
-   bahut log confuse hote hain.
-4. Demo ke time Asha (Python), Ben (Guitar), Cara (Design) wala loop use karo —
-   sabse easy demo hai.
-5. Agar judge puche 'Ye real hai?' — bolo 'Demo workspace, isolated, credits
-   fictional, no real payment, no AI — sab whitepaper me clearly mentioned hai.'
-6. Ending me hamesha localhost ka link bolo aur 'Thank you' ke baad 2 sec pause lo.
-
 ================================================================================
- GOOD LUCK! — SkillLoop Team
+PRESENTER TIPS — HINGLISH
+================================================================================
+• Har slide 50-60 sec max; bullets padhke explain karo, paragraph mat padho.
+• Badges slide pe live dikhao: 'Trailblazer kaise milta hai' — Share a skill.
+• Leaderboard pe 'Weekly vs Last 7 days' difference clear karo.
+• Demo me Asha (Python), Cara (Design), Ben (Guitar) loop use karo — easiest.
+• Judge puche 'Real hai?' — bolo 'Demo, isolated, credits fictional, no AI/video/money — whitepaper me sab boundaries likhe hain.'
+• Thank you ke baad 2 sec pause, eye contact, then Q&A.
+
 ================================================================================

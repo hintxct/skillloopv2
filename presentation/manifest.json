@@ -2,63 +2,51 @@
   "size": "1920x1080",
   "slides": [
     {
-      "name": "01-cover.png",
+      "name": "01-title.png",
       "width": 1920,
       "height": 1080,
-      "sha256": "23026baa92be1e62caa61c8cbf73ad351d7dba1cc6516e4414bf7e9f663692dd"
+      "sha256": "4e614c7a3d2a21fca1e5ee82dae005a8c3a24c6b97db39322719c6011f4ed30c"
     },
     {
       "name": "02-problem.png",
       "width": 1920,
       "height": 1080,
-      "sha256": "0df653f0588a6b65283785c58744018a92c194df14ec83ee15102e33a539a986"
+      "sha256": "b12ed61cf96a71b1ddd64f476add620976071eff1df435f02395846c41f523b0"
     },
     {
       "name": "03-solution.png",
       "width": 1920,
       "height": 1080,
-      "sha256": "86a4291586acca33749c82feae084526549c33254f165eab2abc58c3531752f5"
+      "sha256": "9014bf91c8b500cc0936352da8cbff9286205c4a70dab0c863dab8912a6174fb"
     },
     {
-      "name": "04-how-it-works.png",
+      "name": "04-features.png",
       "width": 1920,
       "height": 1080,
-      "sha256": "913ff8df01be1ba6f298fcd1424c2ee6bc9742cb04593c8b71d808fe043b67dc"
+      "sha256": "cc46ec318737c0d9455b7e4bd24b5bdb00f58ef224f94f130a6511d8ec9212f8"
     },
     {
-      "name": "05-badges.png",
+      "name": "05-how.png",
       "width": 1920,
       "height": 1080,
-      "sha256": "9b1b82875f387671b17e893f20a368edcf1352031c97aa5703b08d5e1cc0e91c"
+      "sha256": "79ba629ce98b012efaf53696acddd9bafc741080ab823d06d9de779d2be557f6"
     },
     {
-      "name": "06-leaderboard.png",
+      "name": "06-impact.png",
       "width": 1920,
       "height": 1080,
-      "sha256": "7523a43c961084108216444d72308bf414fcd920ee0fe0910a42da56ea668361"
-    },
-    {
-      "name": "07-features.png",
-      "width": 1920,
-      "height": 1080,
-      "sha256": "1d4418bc86d431a0680cb5a7788eac156f51a703ecb821cd5144542540b026cc"
-    },
-    {
-      "name": "08-impact.png",
-      "width": 1920,
-      "height": 1080,
-      "sha256": "db9b4b7637980badccba06ee1e5555718ebc5d041bbeff8001b9cb7335196cbb"
+      "sha256": "cbc60e78ce824daa578ff8704b4315e9313d81bf75e3711dd7eab40ef7e7a6e0"
     }
   ],
   "sources": [
     {
       "name": "index.html",
-      "sha256": "d192469f4daa289925fd184d1d3306a886a7ddcbff6d8731a3dca285e748d918"
+      "sha256": "173be4dece2182d4e2ff8a8776659a5056ae11a9ebf53ec37af66a711d354340"
     },
     {
       "name": "slides.css",
-      "sha256": "97c748b2db80f2ccadbde3c5be3b81d8224f0b585de413725bff67129af6e279"
+      "sha256": "3c2a1eb4f664136a8592f5f85b028369e273074ecd8c9fc72f18c1c766d2c95e"
     }
   ],
-  "validation": "8 slides; bundled fonts; no external requests; no clipped text boxes; PNG dimensions checked"
+  "validation": "6 slides; bundled fonts; no external requests; no clipped text boxes; PNG dimensions checked"
 }

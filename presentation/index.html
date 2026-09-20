@@ -3,206 +3,191 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SkillLoop — where curiosity becomes momentum</title>
+    <title>SkillLoop — 6-slide deck (points only, site-only)</title>
     <link rel="stylesheet" href="slides.css" />
   </head>
   <body>
-    <!-- 01 COVER -->
-    <section class="slide cover" data-name="01-cover">
-      <header>
-        <span class="brand"><b>∞</b> skillloop.</span><span>A LITTLE GIVE. A LOT TO LEARN.</span>
-      </header>
-      <div class="cover-grid">
-        <div class="cover-text">
-          <div class="pill"><span class="dot"></span> LIVE DEMO · ISOLATED WORKSPACE · FICTIONAL CREDITS</div>
-          <h1>Where curiosity<br /><span>becomes momentum.</span></h1>
-          <p class="lead">Teach what you know.<br />Learn what you need.<br />Earn proof. Climb together.</p>
-          <div class="cover-stats">
-            <span><b>12</b> badges</span><span><b>3</b> leaderboards</span><span><b>7</b> categories</span>
+    <!-- 01 TITLE -->
+    <section class="slide cover" data-name="01-title">
+      <header><span class="brand"><b>∞</b> skillloop.</span><span>A LITTLE GIVE. A LOT TO LEARN.</span></header>
+      <div class="title-grid">
+        <div>
+          <div class="pill"><span class="dot"></span> DESKTOP-FIRST · BROWSER ONLY · DEMO</div>
+          <h1>SkillLoop</h1>
+          <p class="subtitle">Teach what you know. Learn what you need. Keep a record.</p>
+          <div class="rough">
+            <h3>Project rough idea</h3>
+            <ul>
+              <li>One account = learner + teacher in isolated demo workspaces</li>
+              <li>Publish a skill with outcome → discover → request → agree on time → learn → record</li>
+              <li>3 ways: free session · direct swap (2 lessons) · paid mentorship (100 demo credits, 15-min hold)</li>
+              <li>3-person Trade Circles when 2-way wants don’t align; badges (12) + leaderboard (weekly/monthly/last 7 days)</li>
+            </ul>
           </div>
-          <div class="cover-tags"><span>SkillLoop · Next.js 16 · React 19 · TypeScript</span></div>
+          <div class="team-box">
+            <strong>Team</strong>
+            <span>SkillLoop — Hacklith</span>
+            <small>Add your names / roll nos here. Demo only — no real money, no real identity verification.</small>
+          </div>
         </div>
-        <div class="cover-visual">
+        <div class="title-visual">
           <div class="orbit-big"></div>
           <div class="orbit-small"></div>
-          <div class="hero-badge b1">Trailblazer<br /><small>+50 XP</small></div>
-          <div class="hero-badge b2">Level 4<br /><small>740 XP</small></div>
-          <div class="hero-badge b3">#1 · 320 pts</div>
           <div class="hero-center">⇄</div>
-          <div class="mini-card c1"><span>Python</span><small>Teach</small></div>
-          <div class="mini-card c2"><span>Guitar</span><small>Learn</small></div>
+          <div class="mini-card c1"><span>Python</span><small>Asha teaches</small></div>
+          <div class="mini-card c2"><span>Guitar</span><small>Ben teaches</small></div>
+          <div class="hero-badge b1">12 badges</div>
+          <div class="hero-badge b2">3 boards</div>
         </div>
       </div>
-      <footer><span>skillloop.space · demo only · no real money · English interface</span><span>01 / 08</span></footer>
+      <footer><span>skillloop.vercel.app · Next.js 16 / React 19 / TypeScript · English interface only</span><span>01 / 06</span></footer>
     </section>
 
-    <!-- 02 PROBLEM -->
+    <!-- 02 PROBLEM STATEMENT -->
     <section class="slide" data-name="02-problem">
       <header><span class="brand"><b>∞</b> skillloop.</span><span>THE CHALLENGE</span></header>
-      <div class="eyebrow">02 / PROBLEM</div>
-      <h1>Skills are everywhere.<br />The right connection isn’t.</h1>
-      <p class="lead">Finding, agreeing and proving a useful exchange is the hard part.</p>
-      <div class="problem-grid">
-        <div class="prob-card"><span class="prob-icon">◯</span><h3>Scattered discovery</h3><p>Chats, posts and DMs — no single place to search by skill, language or outcome.</p></div>
-        <div class="prob-card"><span class="prob-icon">≠</span><h3>Non-reciprocal wants</h3><p>A wants Guitar, C wants Python — a direct swap fails. Two people ≠ a match.</p></div>
-        <div class="prob-card"><span class="prob-icon">◷</span><h3>Messy agreement</h3><p>Different time zones, languages, durations and no conflict check → missed lessons.</p></div>
-        <div class="prob-card"><span class="prob-icon">✎</span><h3>No proof of learning</h3><p>Attendance alone doesn’t show what was built, reviewed or remembered.</p></div>
+      <div class="eyebrow">02 / PROBLEM STATEMENT</div>
+      <h1>Problem statement</h1>
+      <p class="lead">What the site actually addresses — points only.</p>
+      <div class="split">
+        <ul class="bullets">
+          <li>Finding the right skill/person is scattered across chats and posts.</li>
+          <li>Two-person swaps fail when interests don’t align (Asha wants Guitar, Cara wants Python).</li>
+          <li>No single place to agree on outcome, language, duration, delivery (online/in-person) and time.</li>
+          <li>Attendance alone doesn’t show what was learned or built.</li>
+          <li>Time-zone and scheduling conflicts cause missed lessons.</li>
+          <li>Public posts don’t reserve a lesson or create a commitment.</li>
+        </ul>
+        <aside class="visual">
+          <div class="visual-label">EXAMPLE — NOT A MATCH</div>
+          <div class="person-card"><span class="initial">A</span><div><h3>Asha</h3><p>Teaches Python<br />Wants Guitar</p></div></div>
+          <div class="mismatch"><span></span><b>≠</b><span></span></div>
+          <div class="person-card mint"><span class="initial">C</span><div><h3>Cara</h3><p>Teaches Design<br />Wants Python</p></div></div>
+          <p class="visual-caption">Needs a 3-person loop to close.</p>
+        </aside>
       </div>
-      <div class="mismatch-row">
-        <div class="person-card"><span class="initial">A</span><div><h3>Asha</h3><p>Teaches Python<br />Wants Guitar</p></div></div>
-        <div class="mismatch"><span></span><b>≠</b><span></span></div>
-        <div class="person-card mint"><span class="initial">C</span><div><h3>Cara</h3><p>Teaches Design<br />Wants Python</p></div></div>
-        <div class="arrow-note">Not a reciprocal match → needs a 3-person loop</div>
-      </div>
-      <footer><span>Framing fictional example · not survey data</span><span>02 / 08</span></footer>
+      <footer><span>Framing only — not a survey claim</span><span>02 / 06</span></footer>
     </section>
 
     <!-- 03 SOLUTION -->
     <section class="slide" data-name="03-solution">
-      <header><span class="brand"><b>∞</b> skillloop.</span><span>DESKTOP-FIRST WEB APP</span></header>
+      <header><span class="brand"><b>∞</b> skillloop.</span><span>THE PRODUCT</span></header>
       <div class="eyebrow">03 / SOLUTION</div>
-      <h1>One place to discover, agree,<br />learn and get recognized.</h1>
-      <p class="lead">Share something you know, learn something you need — and keep a record.</p>
-      <div class="solution-grid">
-        <div class="sol-col">
-          <h3>Three ways to arrange a lesson</h3>
-          <div class="pill-row"><span class="pill green">Free session</span><span class="pill purple">Direct swap</span><span class="pill amber">Paid mentorship*</span></div>
-          <p class="small">* demo credits (100 start) · 15-min hold · no real money</p>
+      <h1>Solution</h1>
+      <p class="lead">One place to publish, discover, agree and record.</p>
+      <div class="sol-grid">
+        <div>
           <ul class="bullets">
-            <li>Publish a skill: title, outcome, tags, duration, delivery, proof link.</li>
-            <li>Discover: search title/description/tag/@username + filters.</li>
-            <li>Coordinate: requests, counter-time, chat (polling), meeting link.</li>
+            <li>One account acts as both learner and teacher.</li>
+            <li>Publish skill: title (5–90), category (incl Other), outcome (10–300), tags 1–8, duration 15–120 min, online/in-person, proof link.</li>
+            <li>Discover: search title/description/tag/@username; filters by category/language/offer/delivery; saved skills; learning-request posts.</li>
+            <li>Arrange: free session · direct swap (2 separate times) · paid mentorship (demo credits, 100 start, 15-min hold, no real money).</li>
+            <li>Agree: request → accept / decline / counter time → scheduled; conflict checks; reschedule before attendance.</li>
+            <li>Learn: chat (polling), external meeting link, attendance (both confirm), work (10–2000) + feedback, reviews (1–5).</li>
+            <li>Motivate: 12 badges + XP/level + leaderboard (weekly / monthly / last 7 days).</li>
           </ul>
         </div>
-        <div class="sol-visual">
-          <div class="flow"><span>Publish skill</span><b>→</b><span>Discover</span><b>→</b><span>Request & consent</span><b>→</b><span>Learn & confirm</span><b>→</b><span class="hl">Badge + XP</span></div>
-          <div class="new-badges">
-            <div class="badge-mock rare">Swap Champion<br /><small>+100 XP</small></div>
-            <div class="badge-mock epic">Loop Closer<br /><small>+200 XP</small></div>
-            <div class="badge-mock legendary">Crowd Favorite<br /><small>5★ review</small></div>
+        <aside class="visual sol-vis">
+          <div class="visual-label">FLOW</div>
+          <div class="flow">Publish → Discover → Request → Agree → Learn → Record → Badge</div>
+          <div class="three-ways">
+            <span class="pill green">Free</span><span class="pill purple">Swap</span><span class="pill amber">Paid*</span>
           </div>
-          <div class="leaderboard-mock">
-            <div class="podium-mock"><span>2</span><span class="first">1</span><span>3</span></div>
-            <p>Live ranks · Last 7 days / Weekly / Monthly</p>
+          <small>* demo credits — not real money</small>
+          <div class="circle-mini">
+            <span>Asha<br /><small>Python</small></span><b>→</b><span>Cara<br /><small>Design</small></span><b>→</b><span>Ben<br /><small>Guitar</small></span><b>→</b><span>Asha</span>
           </div>
-        </div>
+          <p class="visual-caption">Trade Circle = 3 pairwise lessons, not 1 group call.</p>
+        </aside>
       </div>
-      <footer><span>One account = learner + teacher · Trade Circles = 3 pairwise lessons, not group call</span><span>03 / 08</span></footer>
+      <footer><span>Isolated demo workspaces — not a global marketplace</span><span>03 / 06</span></footer>
     </section>
 
-    <!-- 04 HOW IT WORKS + TERMINOLOGY -->
-    <section class="slide" data-name="04-how-it-works">
-      <header><span class="brand"><b>∞</b> skillloop.</span><span>EXPLAINABLE RULES · SERVER PERSISTED</span></header>
-      <div class="eyebrow">04 / HOW IT WORKS · TERMINOLOGY</div>
-      <h1>From browser to database —<br />no magic, just checks.</h1>
-      <div class="arch-row">
-        <article><span class="number">01</span><h3>Browser</h3><p>React 19 · TypeScript<br />Desktop-first, responsive</p></article><span class="conn">→</span>
-        <article><span class="number">02</span><h3>Next.js API</h3><p>Zod validation · ownership<br />Slot & consent checks</p></article><span class="conn">→</span>
-        <article><span class="number">03</span><h3>Database</h3><p>SQLite local · PostgreSQL prod<br />Transactions + polling chat</p></article>
-      </div>
-      <div class="term-grid">
-        <div class="term"><h4>Skill listing</h4><p>Category, level, language, 15–120 min, online/in-person, tags 1–8, outcome 10–300ch.</p></div>
-        <div class="term"><h4>Booking</h4><p>pending → countered → awaiting-payment (15m) → scheduled → completed / declined / cancelled / expired.</p></div>
-        <div class="term"><h4>Trade Circle</h4><p>3 distinct people, online, same language, exact tag↔want match, 1/3→2/3→3/3 consent.</p></div>
-        <div class="term"><h4>Badge</h4><p>12 earned by action. 50–250 XP. Rarity: common/rare/epic/legendary.</p></div>
-        <div class="term"><h4>Leaderboard</h4><p>Points per window: +40 completed (+15 trade +20 circle) · +25 skill · +50 5★ · +2 msg cap20 · +15 post.</p></div>
-        <div class="term"><h4>XP · Level</h4><p>XP = sum badge XP. Level = floor(XP/200)+1. XP forever; points reset per window.</p></div>
-      </div>
-      <div class="callout">Publish → Discover · Request → Agree (consent + time) → Learn (attendance + work/feedback) → Recognize (badge, review, points)</div>
-      <footer><span>Demo polling: state 5s, chat 3s · No AI matching, no video, no escrow</span><span>04 / 08</span></footer>
-    </section>
-
-    <!-- 05 BADGES -->
-    <section class="slide" data-name="05-badges">
-      <header><span class="brand"><b>∞</b> skillloop.</span><span>COLLECT MOMENTS, NOT JUST SKILLS</span></header>
-      <div class="eyebrow">05 / BADGES — 12 WAYS TO EARN</div>
-      <h1>Every action unlocks a badge.<br />Here’s exactly how.</h1>
-      <div class="badge-grid">
-        <div class="bcard common"><span class="bicon">✦</span><h4>Trailblazer</h4><p>Publish your first skill</p><small>via Share a skill · <b>+50 XP</b></small></div>
-        <div class="bcard rare"><span class="bicon">▦</span><h4>Skill Collector</h4><p>Publish 3 skills</p><small>3 listings · <b>+120 XP</b></small></div>
-        <div class="bcard common"><span class="bicon">◐</span><h4>First Spark</h4><p>Complete 1st session</p><small>Both confirm attendance · <b>+80 XP</b></small></div>
-        <div class="bcard rare"><span class="bicon">◎</span><h4>Curious Mind</h4><p>Learn 3 sessions</p><small>As learner · <b>+150 XP</b></small></div>
-        <div class="bcard rare"><span class="bicon">◑</span><h4>Generous Mentor</h4><p>Teach 3 sessions</p><small>As teacher · <b>+150 XP</b></small></div>
-        <div class="bcard epic"><span class="bicon">★</span><h4>Dedicated Sage</h4><p>Teach 5 sessions</p><small>Mastery · <b>+250 XP</b></small></div>
-        <div class="bcard common"><span class="bicon">✎</span><h4>Show & Tell</h4><p>Submit evidence</p><small>Learner work 10–2000ch · <b>+40 XP</b></small></div>
-        <div class="bcard common"><span class="bicon">☰</span><h4>Sharp Reviewer</h4><p>Give feedback</p><small>Teacher review 10–2000ch · <b>+40 XP</b></small></div>
-        <div class="bcard common"><span class="bicon">💬</span><h4>Conversation Starter</h4><p>3 chats with messages</p><small>Send in 3 convos · <b>+60 XP</b></small></div>
-        <div class="bcard rare"><span class="bicon">⇄</span><h4>Swap Champion</h4><p>Complete a swap</p><small>Both lessons confirmed · <b>+100 XP</b></small></div>
-        <div class="bcard epic"><span class="bicon">◈</span><h4>Loop Closer</h4><p>Close a Trade Circle</p><small>All 3 lessons · <b>+200 XP</b></small></div>
-        <div class="bcard epic"><span class="bicon">☆</span><h4>Crowd Favorite</h4><p>Earn 5★ review</p><small>Receive 5★ rating · <b>+180 XP</b></small></div>
-      </div>
-      <div class="badge-foot">
-        <div class="tier-legend"><span class="t common"></span>Common <span class="t rare"></span>Rare <span class="t epic"></span>Epic <span class="t legendary"></span>Legendary</div>
-        <div class="level-bar"><span style="width:62%"></span><small>Level 4 · 740 XP · 60 XP to Level 5</small></div>
-      </div>
-      <footer><span>Platform recognition, not accredited qualification · Progress bar shows earned/total</span><span>05 / 08</span></footer>
-    </section>
-
-    <!-- 06 LEADERBOARD -->
-    <section class="slide" data-name="06-leaderboard">
-      <header><span class="brand"><b>∞</b> skillloop.</span><span>LIVE RANKS · MOTIVATE, DON’T SHAME</span></header>
-      <div class="eyebrow">06 / LEADERBOARD — 3 WINDOWS</div>
-      <h1>Climb by learning, teaching<br />and helping others.</h1>
-      <div class="lb-top">
-        <div class="seg"><span class="on">Last 7 days</span><span>Weekly</span><span>Monthly</span></div>
-        <div class="hint">7 days = rolling · Weekly = Mon→Sun UTC · Monthly = calendar month</div>
-      </div>
-      <div class="lb-main">
-        <div class="podium">
-          <div class="pcol"><b>#2</b><div class="avatar">B</div><span>Ben</span><small>286 pts</small></div>
-          <div class="pcol first"><b>#1</b><div class="avatar big">A</div><span>Asha</span><small>320 pts</small><span class="crown">♛</span></div>
-          <div class="pcol"><b>#3</b><div class="avatar">C</div><span>Cara</span><small>264 pts</small></div>
-        </div>
-        <div class="lb-table">
-          <div class="lb-head"><span>#</span><span>Learner</span><span>Points</span><span>Sessions</span><span>Level</span></div>
-          <div class="lb-row me"><span>#4</span><span><b>You</b> @you</span><span>180 pts</span><span>3 · 1 taught</span><span>Lvl 3</span></div>
-          <div class="lb-row"><span>#5</span><span>Yuki @yuki</span><span>164 pts</span><span>2</span><span>Lvl 2</span></div>
-          <div class="lb-row"><span>#6</span><span>Sofia @sofia</span><span>142 pts</span><span>2</span><span>Lvl 2</span></div>
-        </div>
-      </div>
-      <div class="points-grid">
-        <span>+40 completed</span><span>+15 trade</span><span>+20 circle</span><span>+25 skill shared</span><span>+50 5★</span><span>+2 msg (cap20)</span><span>+15 post</span><span>XP forever · points reset</span>
-      </div>
-      <footer><span>Sorted by points → XP → name · Demo workspace only · No external ranking</span><span>06 / 08</span></footer>
-    </section>
-
-    <!-- 07 KEY FEATURES -->
-    <section class="slide" data-name="07-features">
-      <header><span class="brand"><b>∞</b> skillloop.</span><span>WHAT ACTUALLY WORKS TODAY</span></header>
-      <div class="eyebrow">07 / KEY FEATURES</div>
-      <h1>From idea to recorded<br />learning session.</h1>
+    <!-- 04 KEY FEATURES -->
+    <section class="slide" data-name="04-features">
+      <header><span class="brand"><b>∞</b> skillloop.</span><span>IMPLEMENTED ONLY</span></header>
+      <div class="eyebrow">04 / KEY FEATURES</div>
+      <h1>Key features</h1>
+      <p class="lead">What actually works today — points only.</p>
       <div class="feat-grid">
-        <article><span class="number">01</span><h3>Account & profile</h3><ul><li>18+ check, password 10–128ch, demo inbox code</li><li>Avatar 512KB, time zone, languages, wants 1–10</li></ul></article>
-        <article><span class="number">02</span><h3>Skill management</h3><ul><li>Create/edit/pause/reuse · 20 per user</li><li>Other category · tags 1–8 · soft delete</li></ul></article>
-        <article><span class="number">03</span><h3>Discovery</h3><ul><li>Search title/desc/tag/@user · filters</li><li>Saved skills · learning-request posts</li></ul></article>
-        <article><span class="number">04</span><h3>Bookings</h3><ul><li>Free / paid (100 credits) / trade</li><li>Pending → scheduled → completed; reschedule</li></ul></article>
-        <article><span class="number">05</span><h3>Trade Circles</h3><ul><li>Rule-based 3-way exact match</li><li>Unanimous consent · 3 bookings</li></ul></article>
-        <article><span class="number">06</span><h3>Chat & records</h3><ul><li>Polling chat 3s · 500 msgs</li><li>Attendance · evidence · feedback · reviews</li></ul></article>
-        <article class="hl"><span class="number">07</span><h3>Badges NEW</h3><ul><li>12 badges · XP · Level floor(XP/200)+1</li><li>Visible on profile & badges page</li></ul></article>
-        <article class="hl"><span class="number">08</span><h3>Leaderboard NEW</h3><ul><li>Weekly / Monthly / Last 7 days</li><li>Podium + table + your rank</li></ul></article>
+        <article><span class="number">01</span><h3>Account & profile</h3><ul><li>18+ check; password 10–128; demo 6-digit code (5 min, on-screen, no email/SMS)</li><li>Profile: avatar 512KB, username 3–24 (unique per workspace), languages, timezone, wants 1–10, social links</li><li>Isolated workspaces; persona switch; 1-hour invite link; logout</li></ul></article>
+        <article><span class="number">02</span><h3>Skill management</h3><ul><li>Create / edit / pause / reuse; Other category; tag chips (Enter/+), 1–8 unique</li><li>Max 20 per user; soft delete (history stays); blocked if pending/scheduled/circle open</li></ul></article>
+        <article><span class="number">03</span><h3>Discovery</h3><ul><li>Search skill + people (@username); filters: category/language/offer/delivery</li><li>Tabs: Discover / Skill trades / Free sessions; learning-request posts; saved skills</li></ul></article>
+        <article><span class="number">04</span><h3>Bookings</h3><ul><li>Incoming / sent / upcoming / completed / closed; counter-time; reschedule (before attendance)</li><li>Attendance: both confirm; swap needs both lessons confirmed</li></ul></article>
+        <article><span class="number">05</span><h3>Trade Circles</h3><ul><li>Rule-based: 3 distinct, online, same language, exact tag↔want, no blocked pairs</li><li>1/3 → 2/3 → 3/3 consent; 3 bookings only then; withdraw cancels remaining</li></ul></article>
+        <article><span class="number">06</span><h3>Chat & records</h3><ul><li>Message request (1 intro) → accept; polling 3s; 500 msgs/convo, 100 loaded; unread counts</li><li>Meeting link (teacher), evidence + feedback (10–2000), reviews (5–700, 1 per booking)</li></ul></article>
+        <article class="hl"><span class="number">07</span><h3>Badges (NEW)</h3><ul><li>12 badges: common/rare/epic; how to earn shown (e.g., 3 teaches, 1 circle, 5★)</li><li>XP = sum; Level = floor(XP/200)+1; progress bar on profile + badges page</li></ul></article>
+        <article class="hl"><span class="number">08</span><h3>Leaderboard (NEW)</h3><ul><li>Weekly (Mon-Sun UTC) / Monthly / Last 7 days (rolling)</li><li>Points: +40 completed (+15 trade +20 circle) +25 skill +50 5★ +2 msg cap20 +15 post; podium + table</li></ul></article>
       </div>
-      <footer><span>Limits: post 150, circle 30, bookings 250 · No video, no escrow, no moderation panel</span><span>07 / 08</span></footer>
+      <footer><span>No AI, no video, no real payments, no escrow, no moderation panel — as per whitepaper</span><span>04 / 06</span></footer>
     </section>
 
-    <!-- 08 IMPACT -->
-    <section class="slide" data-name="08-impact">
-      <header><span class="brand"><b>∞</b> skillloop.</span><span>PRACTICAL VALUE, NOT HYPE</span></header>
-      <div class="eyebrow">08 / IMPACT & BENEFITS</div>
-      <h1>Small, clear wins<br />that compound.</h1>
-      <div class="impact-grid">
-        <div class="imp-col">
-          <h3>For learners</h3><ul><li>Find the exact skill + outcome</li><li>Pay with knowledge, not always money</li><li>Visible progress: badges, minutes, reviews</li></ul>
+    <!-- 05 HOW WE DOING IT, TERMINOLOGY -->
+    <section class="slide" data-name="05-how">
+      <header><span class="brand"><b>∞</b> skillloop.</span><span>HOW + TERMS</span></header>
+      <div class="eyebrow">05 / HOW WE DOING IT · TERMINOLOGY</div>
+      <h1>How we built it & what terms mean</h1>
+      <div class="how-grid">
+        <div class="how-col">
+          <h3>How we do it</h3>
+          <div class="arch">
+            <article><span class="number">01</span><h4>Browser</h4><p>React 19 / TypeScript<br />Desktop-first, responsive</p></article><span>→</span>
+            <article><span class="number">02</span><h4>Next.js API</h4><p>Zod validation<br />Ownership + time checks</p></article><span>→</span>
+            <article><span class="number">03</span><h4>Store</h4><p>SQLite local<br />Postgres prod<br />In-memory on Vercel demo</p></article>
+          </div>
+          <ul>
+            <li>One project: frontend + API together; transactions protect bookings/credits/messages.</li>
+            <li>Polling: state 5s, chat 3s; not WebSocket; no end-to-end encryption.</li>
+            <li>Limits: posts 150, circles 30, bookings 250 per workspace; build + typecheck + tests pass.</li>
+          </ul>
         </div>
-        <div class="imp-col">
-          <h3>For teachers</h3><ul><li>Share one skill, reach many</li><li>Earn recognition + leaderboard momentum</li><li>Feedback loop improves teaching</li></ul>
-        </div>
-        <div class="imp-col">
-          <h3>For community</h3><ul><li>3-way loops unlock impossible swaps</li><li>Chat stays tied to learning</li><li>Safe demo: isolated workspaces</li></ul>
+        <div class="how-col">
+          <h3>Terminology — points</h3>
+          <div class="term-grid">
+            <div class="term"><h4>Skill listing</h4><p>Category, level, language, duration 15–120, delivery, tags, outcome, proof link.</p></div>
+            <div class="term"><h4>Booking</h4><p>States: pending → countered → awaiting-payment (15m) → scheduled → completed / declined / cancelled / expired.</p></div>
+            <div class="term"><h4>Trade Circle</h4><p>3 people, 3 skills, 3 pairwise lessons; exact match; 3/3 consent.</p></div>
+            <div class="term"><h4>Badge</h4><p>12 earned by action; tier common/rare/epic; XP 40–250.</p></div>
+            <div class="term"><h4>XP / Level</h4><p>XP = sum badge XP; Level = floor(XP/200)+1; XP forever, points per window.</p></div>
+            <div class="term"><h4>Leaderboard</h4><p>Weekly / Monthly / Last 7 days; points as above; sorted points → XP → name.</p></div>
+            <div class="term"><h4>Workspace</h4><p>Isolated seeded demo; shared via 1-hour invite; not global.</p></div>
+            <div class="term"><h4>Credits</h4><p>Fictional integer (100 = 1 credit); no purchase/withdrawal; refunds if balance allows.</p></div>
+          </div>
         </div>
       </div>
-      <div class="benefit-bar"><span>Motivation without tuition</span><span>·</span><span>Proof beyond attendance</span><span>·</span><span>Healthy competition via windows</span></div>
-      <div class="next-steps"><b>Next:</b> Verified deployment · moderation · calendar sync · media attachments — beyond this demo</div>
-      <footer><span>Demo impact, not measured social outcome · share what you know, learn what you need</span><span>08 / 08</span></footer>
+      <footer><span>Explainable rules — no AI matching, no video generation</span><span>05 / 06</span></footer>
+    </section>
+
+    <!-- 06 INNOVATION & IMPACT -->
+    <section class="slide" data-name="06-impact">
+      <header><span class="brand"><b>∞</b> skillloop.</span><span>BEYOND 2-WAY</span></header>
+      <div class="eyebrow">06 / INNOVATION & IMPACT</div>
+      <h1>Innovation & impact</h1>
+      <p class="lead">Small wins, not hype — points only, site-only.</p>
+      <div class="impact-split">
+        <div class="imp-box">
+          <h3>Innovation — points</h3>
+          <ul>
+            <li>Goes beyond perfect 2-person match via 3-person Trade Circles (explainable tag match).</li>
+            <li>Unanimous consent: lessons activate only at 3/3; time-conflict checks.</li>
+            <li>Proof beyond attendance: separate evidence (learner) + feedback (teacher) → reviews.</li>
+            <li>Motivation without money: 12 badges with clear how-to-earn + live leaderboard windows.</li>
+            <li>One codebase for UI + API; seeded workspaces for parallel demo without real data.</li>
+          </ul>
+        </div>
+        <div class="imp-box">
+          <h3>Impact & benefits — points</h3>
+          <ul>
+            <li>Learner: find exact outcome/ language; pay with knowledge when possible.</li>
+            <li>Teacher: share one skill to many; visible minutes + reviews + badges.</li>
+            <li>Community: impossible swaps become possible via loops; chat tied to learning.</li>
+            <li>Safe demo: isolated workspaces, fictional contacts/credits, help & safety guidance.</li>
+            <li>Honest limits: demo recognition, not accredited cert; no real payments; no staffed moderation; workspace expiry.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="benefit-bar"><span>Share what you know</span><span>·</span><span>Learn what you need</span><span>·</span><span>Keep a record</span></div>
+      <footer><span>Demonstrated capability — not measured social impact or employment guarantee</span><span>06 / 06</span></footer>
     </section>
   </body>
 </html>
