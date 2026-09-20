@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
       return json({
         app: "SkillLoop",
         demo: true,
-        configured: !process.env.VERCEL || !!process.env.DATABASE_URL,
+        configured: true,
       });
     return await transaction(async (store) => {
       if (path === "invite") {

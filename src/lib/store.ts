@@ -8,6 +8,7 @@ type Globals = typeof globalThis & {
   slPool?: Pool;
   slSqlite?: DatabaseSync;
   slQueue?: Promise<void>;
+  slMemory?: Map<string, Row>;
 };
 const globals = globalThis as Globals;
 export const SCHEMA = `CREATE TABLE IF NOT EXISTS sl_records (
@@ -27,9 +28,9 @@ export interface Store {
 }
 
 export function backendName() {
-  return process.env.DATABASE_URL
-    ? "PostgreSQL · shared backend"
-    : "SQLite · local development";
+  if (process.env.DATABASE_URL) return "PostgreSQL · shared backend";
+  if (process.env.VERCEL) return "In-memory · demo (ephemeral)";
+  return "SQLite · local development";
 }
 
 async function pool() {
@@ -54,10 +55,13 @@ async function pool() {
 }
 
 async function sqlite() {
-  if (process.env.VERCEL)
+  if (process.env.VERCEL) {
+    // On Vercel without DATABASE_URL we use in-memory store (ephemeral demo).
+    // Keep this throw only for explicit migrate without DB; transaction() will use memory.
     throw new Error(
       "SETUP: Connect a PostgreSQL database, set DATABASE_URL, and run npm run db:migrate before using this deployment.",
     );
+  }
   if (!globals.slSqlite) {
     const { DatabaseSync } = await import("node:sqlite");
     mkdirSync(join(process.cwd(), ".data"), { recursive: true });
@@ -68,6 +72,34 @@ async function sqlite() {
     globals.slSqlite.exec(SCHEMA);
   }
   return globals.slSqlite;
+}
+
+function memoryStore(): Store {
+  if (!globals.slMemory) globals.slMemory = new Map<string, Row>();
+  const map = globals.slMemory;
+  return {
+    async get<T>(kind: string, id: string) {
+      const key = `${kind}:${id}`;
+      const row = map.get(key);
+      if (
+        !row ||
+        (row.expires_at !== null && Number(row.expires_at) < Date.now())
+      ) {
+        if (row) map.delete(key);
+        return null;
+      }
+      return JSON.parse(row.data) as T;
+    },
+    async put(kind, id, value, expires) {
+      map.set(`${kind}:${id}`, {
+        data: JSON.stringify(value),
+        expires_at: expires ?? null,
+      });
+    },
+    async remove(kind, id) {
+      map.delete(`${kind}:${id}`);
+    },
+  };
 }
 
 function adapter(client: PoolClient | DatabaseSync, postgres: boolean): Store {
@@ -127,6 +159,20 @@ export async function transaction<T>(
       client.release();
     }
   }
+  if (process.env.VERCEL) {
+    // Ephemeral in-memory demo on Vercel without external DB.
+    const previous = globals.slQueue ?? Promise.resolve();
+    let release!: () => void;
+    globals.slQueue = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await previous;
+    try {
+      return await work(memoryStore());
+    } finally {
+      release();
+    }
+  }
   const previous = globals.slQueue ?? Promise.resolve();
   let release!: () => void;
   globals.slQueue = new Promise<void>((resolve) => {
@@ -157,6 +203,8 @@ export async function migrate() {
       await p.end();
       globals.slPool = undefined;
     }
+  } else if (process.env.VERCEL) {
+    if (!globals.slMemory) globals.slMemory = new Map<string, Row>();
   } else {
     await sqlite();
   }
