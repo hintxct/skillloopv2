@@ -1,0 +1,172 @@
+================================================================================
+ SKILLOOP — FULL READY-TO-GO HINGLISH SCRIPT (A to Z)
+ 6 Slides + Live Demo + Cross-Question Bank
+ Points only, Site-only — Demo boundaries clear, no overclaim
+================================================================================
+
+[ENTRY — 10 sec]
+"Good morning judges, mentors and friends. Hum Team SkillLoop se hain.
+Aaj hum SkillLoop dikhayenge — 'A little give, a lot to learn.'
+Ye desktop-first browser demo hai, Next.js 16, React 19, TypeScript pe bana hai.
+English interface, isolated demo workspaces, fictional data — real money ya real
+verification nahi. Chaliye start karte hain."
+
+--------------------------------------------------------------------------------
+SLIDE 01 — TITLE (30 sec)
+--------------------------------------------------------------------------------
+"Slide 1 — Title. Project rough idea points me:
+• Ek hi account learner + teacher — isolated workspace me.
+• Publish with outcome → discover → request → time agree → learn → record.
+• 3 ways: free session, direct swap (2 lessons), paid mentorship (100 demo credits, 15-min hold).
+• 3-person Trade Circle jab 2-way fail, plus 12 badges + leaderboard (weekly/monthly/last 7 days).
+Team: SkillLoop — Hacklith. Demo only."
+
+--------------------------------------------------------------------------------
+SLIDE 02 — PROBLEM (45 sec)
+--------------------------------------------------------------------------------
+"Slide 2 — Problem statement, points:
+• Skill dhoondhna scattered hai.
+• 2-way swap fail jab wants align nahi — Asha Python→Guitar, Cara Design→Python = ≠.
+• Outcome/language/duration/delivery/time ek jagah agree nahi hota.
+• Attendance se learning proof nahi.
+• Time-zone conflicts se miss.
+• Posts se reservation nahi.
+Framing hai, survey claim nahi."
+
+--------------------------------------------------------------------------------
+SLIDE 03 — SOLUTION (60 sec)
+--------------------------------------------------------------------------------
+"Slide 3 — Solution, one place:
+• Ek account = learner+teacher.
+• Publish: title 5–90, Other category, outcome 10–300, tags 1–8 unique, 15–120 min, online/in-person, proof link.
+• Discover: search title/desc/tag/@user, filters category/language/offer/delivery, saved, learning-request posts.
+• Arrange: free / swap (2 times) / paid (demo credits, no real money).
+• Agree: request → accept/decline/counter → scheduled; conflict check; reschedule before attendance.
+• Learn: polling chat 3s (need accept), meeting link (teacher), attendance both confirm, evidence 10–2000 + feedback, reviews 1–5.
+• Motivate: 12 badges + 3 boards.
+Isolated demo — global marketplace nahi."
+
+--------------------------------------------------------------------------------
+SLIDE 04 — KEY FEATURES (70 sec)
+--------------------------------------------------------------------------------
+"Slide 4 — Key features, implemented only:
+01 Account — 18+ check, 10–128 password, 6-digit on-screen code 5 min (no SMS), avatar 512KB, username 3–24 per workspace, wants 1–10, persona switch + 1-hour invite.
+02 Skill — create/edit/pause/reuse, Other, 20 max, soft delete (history stays), block if open booking/circle.
+03 Discovery — search+people, filters, saved.
+04 Bookings — incoming/sent/upcoming/completed/closed, counter, reschedule, swap needs both lessons.
+05 Trade Circle — 3 distinct, online, same language, exact tag↔want, no blocked, 1/3→3/3 then 3 bookings.
+06 Chat & records — 1 intro→accept, 500 msgs, 100 loaded, meeting link, evidence/feedback, reviews.
+07 Badges NEW — 12, common/rare/epic, clear how-to-earn (3 teaches, 1 circle, 5★), XP sum, Level floor(XP/200)+1.
+08 Leaderboard NEW — Weekly Mon-Sun UTC / Monthly / Last 7 days rolling, +40 completed (+15 trade +20 circle) +25 skill +50 5★ +2 msg cap20 +15 post.
+Jo nahi: AI, video, real money, escrow, moderation panel."
+
+--------------------------------------------------------------------------------
+SLIDE 05 — HOW WE DOING IT + TERMINOLOGY (60 sec)
+--------------------------------------------------------------------------------
+"Slide 5 — How + Terms:
+How:
+• Next.js 16 + React 19 + TS; SQLite local / Postgres prod / In-memory on Vercel demo (ephemeral).
+• One project frontend+API; transactions + advisory lock for demo; polling 5s state/3s chat; no WebSocket/E2E.
+• Limits: posts 150, circles 30, bookings 250 per workspace.
+Terms points:
+• Skill listing, Booking states pending→completed, Trade Circle, Badge (12), XP/Level, Leaderboard points, Workspace isolated, Credits fictional (100=1 credit).
+Flow: Publish → Discover → Request → Agree → Learn → Record → Recognize."
+
+--------------------------------------------------------------------------------
+SLIDE 06 — INNOVATION & IMPACT (50 sec)
+--------------------------------------------------------------------------------
+"Slide 6 — Innovation & Impact:
+Innovation points:
+• Beyond 2-way via 3-way explainable rule match (no AI).
+• Unanimous 3/3 + time checks.
+• Proof beyond attendance: evidence+feedback.
+• Motivation without money: badges + windows.
+• Seeded workspaces for parallel demo.
+Impact points (demo only):
+• Learner: exact outcome/language, knowledge se pay.
+• Teacher: one skill → many, visible minutes/reviews/badges.
+• Community: impossible swaps via loops, chat tied to learning, safe demo.
+• Honest: recognition not cert, no real payments, no staffed moderation, expiry.
+Tagline: Share what you know, learn what you need, keep a record.
+Thank you — live demo dekhu? skillloopv2.vercel.app pe One-click demo login se Asha→Cara→Ben loop + badge + board live."
+
+--------------------------------------------------------------------------------
+LIVE DEMO FLOW (60 sec, after PPT)
+--------------------------------------------------------------------------------
+"Demo: 1) Alex se Python search → Asha ki skill request (tomorrow) → 2) Header Demo → Asha switch → Requests accept → 3) Alex switch → pay if paid → 4) Session open → chat → meeting link → 5) Both attendance confirm → evidence/feedback → review → 6) Trade → Python→Design→Guitar circle propose → 2/3 → 3/3 active → 7) Profile pe badges/level, Leaderboard pe rank dekho."
+
+--------------------------------------------------------------------------------
+CREDITS — ROLE & AFTER 100 (30 sec Q&A ready)
+--------------------------------------------------------------------------------
+"Credits fictional hain, 100 start (100 units=1 credit), sirf paid mentorship me, free/swap me zero. Flow paid: request→accept→awaiting 15m→Use credits→check→transfer→scheduled. No purchase/withdraw, teacher ko milega, balance kam to refund fail. After 100 gone: paid nahi le sakte (Not enough funds, expired), lekin free/swap/circle hamesha kar sakte ho; wapas teacher banke earn karo."
+
+Hinglish 15-sec: "Sir 100 khatam pe paid nahi, free/swap chalta hai, wapas teacher banke earn karo, koi buy nahi, demo simulation hai."
+
+--------------------------------------------------------------------------------
+CROSS-QUESTION BANK — Ready Answers (Hinglish, points)
+--------------------------------------------------------------------------------
+Q: Tech stack?
+A: "Next.js 16, React 19, TypeScript, SQLite local / Postgres prod / In-memory Vercel demo, polling chat, transactions."
+
+Q: Why no AI?
+A: "Explainable rule match chahiye tha — exact tag, same language, online, no blocked — AI overkill aur demo me transparent nahi."
+
+Q: Why demo credits, not real money?
+A: "Real payment ka scope aur risk bada hai, demo me workflow dikhana tha — simulation, escrow/withdraw nahi, whitepaper me clearly mentioned."
+
+Q: After 100 credits?
+A: "Upar wala answer — free/swap chalta, teacher banke earn."
+
+Q: Trade Circle logic?
+A: "3 distinct, online, same language, exact tag↔want, no blocked, 1/3→3/3 consent pe 3 bookings, withdraw se remaining cancel."
+
+Q: Badge kaise milega?
+A: "12 badges, har ek ka how-to-earn slide 5 pe — e.g., Trailblazer pehli skill, Curious 3 learns, Loop Closer 1 circle, Crowd 5★."
+
+Q: Leaderboard Weekly vs Last 7 days?
+A: "Weekly Mon-Sun UTC reset, Last 7 days rolling 7 din, Monthly calendar month. Points same, window alag. XP forever, points reset."
+
+Q: Auth secure? Real email?
+A: "Demo auth only — 6-digit on-screen, no SMS/email, no real verification. Salted scrypt hash, isolated workspace, shared invite se koi bhi uss workspace ke personas ban sakta hai — real data mat dalo."
+
+Q: Data kahan store?
+A: "Room document per workspace, SQLite local, Postgres prod, Vercel pe in-memory ephemeral (isiliye health configured true kiya). 14 din expiry."
+
+Q: Scalability? 1000 users?
+A: "Demo bounded — single advisory lock, not high-throughput. Production me normalize + row locks karna padega, docs me likha hai."
+
+Q: Mobile? Video?
+A: "Responsive hai, desktop-first. Native video nahi, meeting link external, no recording."
+
+Q: Isolated workspace matlab?
+A: "Har naya account alag seeded workspace — dusre ka data nahi dikhta. 1-hour invite se same workspace share hota hai, tabhi demo dono browser me."
+
+Q: Limits?
+A: "Skill 20, tags 1–8, posts 150, circles 30, bookings 250, msgs 500/100 loaded, avatar 512KB, evidence 10–2000."
+
+Q: Moderation?
+A: "Reports stored, no staffed panel, no guarantee — safety guidance di hai, help & safety me."
+
+Q: Vercel pe pehle configured false kyun?
+A: "DATABASE_URL nahi tha, ab in-memory fix + DEMO_MODE=true set kiya, ab health true aur demo login 200 deta hai — Set-Cookie ke saath."
+
+Q: Innovation kya?
+A: "3-way beyond 2-way, unanimous consent, proof beyond attendance, badges+windows motivation — sab rule-based, no hype."
+
+Q: Future scope?
+A: "Verified deployment, moderation panel, calendar sync, media attachments — abhi nahi, next steps slide me."
+
+--------------------------------------------------------------------------------
+CLOSING (10 sec)
+--------------------------------------------------------------------------------
+"Yehi implemented product hai, future roadmap nahi. Whitepaper me boundaries clear hain. Thank you — any questions? Demo live hai: skillloopv2.vercel.app"
+
+[TIPS]
+• Har slide 50 sec max, bullets padhke explain, visual point karo.
+• Badge pe live: Share a skill → Trailblazer.
+• Board pe Weekly vs 7 days difference.
+• Loop demo Asha→Cara→Ben easiest.
+• 'Real hai?' → 'Demo, isolated, fictional, boundaries whitepaper me.'
+• Thank you pe 2 sec pause, eye contact.
+
+================================================================================
