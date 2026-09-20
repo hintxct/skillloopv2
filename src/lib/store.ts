@@ -9,6 +9,7 @@ type Globals = typeof globalThis & {
   slSqlite?: DatabaseSync;
   slQueue?: Promise<void>;
   slMemory?: Map<string, Row>;
+  slBlobCache?: Map<string, Row>;
 };
 const globals = globalThis as Globals;
 export const SCHEMA = `CREATE TABLE IF NOT EXISTS sl_records (
@@ -107,29 +108,81 @@ function memoryStore(): Store {
 function blobStore(): Store {
   // Persistent demo on Vercel via Blob — survives across serverless instances and devices.
   // Each record is a public JSON blob at skillloop/<kind>/<id>.json
+  // Write-through memory cache gives read-after-write consistency on the same instance;
+  // cross-instance reads use CDN-bypassed fetch with retries to handle Blob eventual consistency.
   const prefix = "skillloop";
+  function cache(): Map<string, Row> {
+    if (!globals.slBlobCache) globals.slBlobCache = new Map<string, Row>();
+    return globals.slBlobCache;
+  }
   return {
     async get<T>(kind: string, id: string) {
+      const key = `${kind}:${id}`;
+      const pathname = `${prefix}/${kind}/${id}.json`;
+      // 1) Fast path: write-through cache (same instance, no CDN lag)
+      const cached = cache().get(key);
+      if (cached) {
+        if (
+          cached.expires_at !== null &&
+          Number(cached.expires_at) < Date.now()
+        ) {
+          cache().delete(key);
+        } else {
+          try {
+            return JSON.parse(cached.data) as T;
+          } catch {}
+        }
+      }
+      // 2) Blob read with retries (list can lag right after a put on another instance)
       try {
         const { list } = await import("@vercel/blob");
-        const pathname = `${prefix}/${kind}/${id}.json`;
-        const { blobs } = await list({ prefix: pathname });
-        const blob = blobs.find((b) => b.pathname === pathname);
-        if (!blob) return null;
-        const res = await fetch(blob.url, { cache: "no-store" });
-        if (!res.ok) return null;
-        const row = (await res.json()) as Row;
-        if (
-          row.expires_at !== null &&
-          Number(row.expires_at) < Date.now()
-        ) {
+        for (let attempt = 0; attempt < 3; attempt++) {
           try {
-            const { del } = await import("@vercel/blob");
-            await del(blob.url);
-          } catch {}
-          return null;
+            const { blobs } = await list({ prefix: pathname });
+            const blob = blobs.find((b) => b.pathname === pathname);
+            if (!blob) {
+              if (attempt < 2) {
+                await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+                continue;
+              }
+              return null;
+            }
+            // Cache-bust to bypass CDN edge cache after overwrite
+            const url = `${blob.url}${blob.url.includes("?") ? "&" : "?"}cb=${Date.now()}`;
+            const res = await fetch(url, {
+              cache: "no-store",
+              headers: { "Cache-Control": "no-cache" },
+            });
+            if (!res.ok) {
+              if (attempt < 2) {
+                await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+                continue;
+              }
+              return null;
+            }
+            const row = (await res.json()) as Row;
+            if (
+              row.expires_at !== null &&
+              Number(row.expires_at) < Date.now()
+            ) {
+              try {
+                const { del } = await import("@vercel/blob");
+                await del(blob.url);
+              } catch {}
+              cache().delete(key);
+              return null;
+            }
+            cache().set(key, row);
+            return JSON.parse(row.data) as T;
+          } catch {
+            if (attempt < 2) {
+              await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+              continue;
+            }
+            return null;
+          }
         }
-        return JSON.parse(row.data) as T;
+        return null;
       } catch {
         return null;
       }
@@ -141,6 +194,8 @@ function blobStore(): Store {
         data: JSON.stringify(value),
         expires_at: expires ?? null,
       };
+      // Write-through: update local cache immediately for read-after-write
+      cache().set(`${kind}:${id}`, row);
       await put(pathname, JSON.stringify(row), {
         access: "public",
         contentType: "application/json",
@@ -149,6 +204,7 @@ function blobStore(): Store {
       } as never);
     },
     async remove(kind, id) {
+      cache().delete(`${kind}:${id}`);
       try {
         const { list, del } = await import("@vercel/blob");
         const pathname = `${prefix}/${kind}/${id}.json`;
@@ -274,10 +330,7 @@ export async function migrate() {
       await p.end();
       globals.slPool = undefined;
     }
-  } else if (
-    process.env.BLOB_READ_WRITE_TOKEN ||
-    process.env.BLOB_STORE_ID
-  ) {
+  } else if (process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) {
     // Blob needs no schema migration.
   } else if (process.env.VERCEL) {
     if (!globals.slMemory) globals.slMemory = new Map<string, Row>();

@@ -683,7 +683,13 @@ export function ChatPanel({
         );
         if (active) {
           loadedFor.current = selected;
-          setMessages(result.messages);
+          // Preserve optimistic temp bubbles while server catches up (Blob lag)
+          setMessages((prev) => {
+            const temps = prev.filter((m) => m.id.startsWith("temp-"));
+            const serverIds = new Set(result.messages.map((m) => m.clientId));
+            const kept = temps.filter((t) => !serverIds.has(t.clientId));
+            return [...result.messages, ...kept];
+          });
         }
       } catch (e) {
         if (active) setError((e as Error).message);
@@ -694,7 +700,7 @@ export function ChatPanel({
     void load();
     const interval = setInterval(() => {
       if (document.visibilityState === "visible") void load();
-    }, 3000);
+    }, 2000);
     return () => {
       active = false;
       clearInterval(interval);
@@ -744,19 +750,32 @@ export function ChatPanel({
   async function send(e: React.FormEvent) {
     e.preventDefault();
     if (!draft.trim() || !c) return;
-    setSending(true);
-    setError("");
+    const text = draft.trim();
     const current = selected;
     clientId.current ||= crypto.randomUUID();
+    const cid = clientId.current;
+    // Optimistic: show instantly for smooth 1-to-1 feel
+    const optimistic: Message = {
+      id: `temp-${cid}`,
+      senderId: state.me.id,
+      text,
+      clientId: cid,
+      createdAt: new Date().toISOString(),
+    };
+    setMessages((prev) =>
+      prev.some((m) => m.clientId === cid) ? prev : [...prev, optimistic],
+    );
+    setDraft("");
+    setSending(true);
+    setError("");
     try {
       await act({
         action: "message",
         conversationId: current,
-        text: draft,
-        clientId: clientId.current,
+        text,
+        clientId: cid,
       });
       if (selectedRef.current === current) {
-        setDraft("");
         clientId.current = "";
         const result = await api<{ messages: Message[] }>(
           `messages?id=${current}`,
@@ -767,6 +786,11 @@ export function ChatPanel({
         }
       }
     } catch (e) {
+      // Roll back optimistic on failure so the bubble doesn't lie
+      if (selectedRef.current === current) {
+        setMessages((prev) => prev.filter((m) => m.clientId !== cid));
+        setDraft(text);
+      }
       setError((e as Error).message);
     } finally {
       setSending(false);
@@ -777,7 +801,9 @@ export function ChatPanel({
     : undefined;
   const isGroup = (c?.members.length ?? 0) > 2;
   const others = c
-    ? state.users.filter((u) => c.members.includes(u.id) && u.id !== state.me.id)
+    ? state.users.filter(
+        (u) => c.members.includes(u.id) && u.id !== state.me.id,
+      )
     : [];
   return (
     <div className={`chat-layout ${c ? "has-selection" : ""}`}>
@@ -862,6 +888,9 @@ export function ChatPanel({
                 roomName={`SkillLoop-${c.id}`}
                 displayName={state.me.name}
                 label={isGroup ? "Group video" : "Video"}
+                onRing={() =>
+                  act({ action: "call", conversationId: c.id }).catch(() => {})
+                }
               />
               <span className="badge purple">DEMO</span>
             </div>

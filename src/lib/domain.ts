@@ -587,6 +587,12 @@ export const actionSchema = z.discriminatedUnion("action", [
     circleId: id,
     accept: z.boolean(),
   }),
+  z.object({
+    action: z.literal("call"),
+    conversationId: id.optional(),
+    bookingId: id.optional(),
+  }),
+  z.object({ action: z.literal("call-read") }),
 ]);
 export type Action = z.infer<typeof actionSchema>;
 export function assert(
@@ -1350,7 +1356,75 @@ export function applyAction(
     room.notifications
       .filter((n) => n.userId === me.id)
       .forEach((n) => (n.read = true));
-  else if (a.action === "review") {
+  else if (a.action === "call-read")
+    room.notifications
+      .filter((n) => n.userId === me.id && n.target.startsWith("call:"))
+      .forEach((n) => (n.read = true));
+  else if (a.action === "call") {
+    // Ring the other participant(s): creates an unread call notification.
+    // Target format: call:<conversationId|booking:bookingId> so the client can join the same Jitsi room.
+    assert(
+      a.conversationId || a.bookingId,
+      "Choose a conversation or session to call.",
+    );
+    if (a.conversationId) {
+      const c = room.conversations.find(
+        (c) => c.id === a.conversationId && c.members.includes(me.id),
+      );
+      assert(c, "Conversation not found.", 404);
+      assert(
+        !c.members.some((u) => u !== me.id && blocked(room, me.id, u)),
+        "This conversation is blocked.",
+        403,
+      );
+      const targets = c.members.filter((u) => u !== me.id);
+      assert(targets.length > 0, "No one to call.", 400);
+      // Avoid spam: one ringing notification per conversation per 30s per caller
+      const recent = room.notifications.some(
+        (n) =>
+          n.target === `call:${c.id}` &&
+          n.body.includes(me.name) &&
+          Date.now() - +new Date(n.createdAt) < 30000,
+      );
+      if (!recent) {
+        for (const target of targets) {
+          notice(
+            room,
+            target,
+            `Incoming video call from ${me.name}`,
+            `${me.name} is calling you — tap to join the same video room.`,
+            `call:${c.id}`,
+          );
+        }
+      }
+      return { callTarget: `call:${c.id}`, roomName: `SkillLoop-${c.id}` };
+    }
+    const b = room.bookings.find(
+      (b) =>
+        b.id === a.bookingId && [b.providerId, b.learnerId].includes(me.id),
+    );
+    assert(b, "Booking not found.", 404);
+    const other = b.providerId === me.id ? b.learnerId : b.providerId;
+    const recent = room.notifications.some(
+      (n) =>
+        n.target === `call:booking:${b.id}` &&
+        n.body.includes(me.name) &&
+        Date.now() - +new Date(n.createdAt) < 30000,
+    );
+    if (!recent) {
+      notice(
+        room,
+        other,
+        `Incoming video call from ${me.name}`,
+        `${me.name} is calling about “${b.title}” — tap to join.`,
+        `call:booking:${b.id}`,
+      );
+    }
+    return {
+      callTarget: `call:booking:${b.id}`,
+      roomName: `SkillLoop-${b.circleId || b.id}`,
+    };
+  } else if (a.action === "review") {
     const b = room.bookings.find(
       (b) =>
         b.id === a.bookingId &&
@@ -1526,7 +1600,7 @@ export function applyAction(
           room,
           [...c.members].sort(),
           `Trade Circle • ${c.members.length} learners`,
-          true
+          true,
         );
         c.status = "active";
       }

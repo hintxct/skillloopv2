@@ -62,6 +62,7 @@ import {
 } from "./panels";
 import { BadgeShowcase } from "./badges";
 import { LeaderboardPanel } from "./leaderboard";
+import { IncomingCallModal } from "./incoming-call";
 
 type Panel =
   | "home"
@@ -164,13 +165,71 @@ export default function SkillLoop() {
     }
   }, [refresh]);
   const activeUserId = state?.me.id;
+  const prevNotifRef = useRef<string>("");
+  const prevChatRef = useRef<string>("");
   useEffect(() => {
     if (!activeUserId) return;
+    const onFocus = () => void refresh();
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onFocus);
     const timer = setInterval(() => {
       if (document.visibilityState === "visible") void refresh();
-    }, 5000);
-    return () => clearInterval(timer);
+    }, 3500);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onFocus);
+      clearInterval(timer);
+    };
   }, [activeUserId, refresh]);
+  // Live toasts: new request / message / call — so nothing feels missed
+  useEffect(() => {
+    if (!state) return;
+    const unreadIds = state.notifications
+      .filter((n) => !n.read)
+      .map((n) => n.id)
+      .sort()
+      .join(",");
+    if (prevNotifRef.current && unreadIds !== prevNotifRef.current) {
+      const prev = new Set(prevNotifRef.current.split(",").filter(Boolean));
+      const fresh = state.notifications.filter(
+        (n) => !n.read && !prev.has(n.id),
+      );
+      const call = fresh.find((n) => n.target.startsWith("call:"));
+      const req = fresh.find(
+        (n) =>
+          n.title.toLowerCase().includes("request") ||
+          n.title.toLowerCase().includes("connection") ||
+          n.title.toLowerCase().includes("circle"),
+      );
+      if (call) setToast(`📞 ${call.title} — tap Chat to join`);
+      else if (req) setToast(`🔔 ${req.title}: ${req.body}`);
+      else if (fresh[0]) setToast(`🔔 ${fresh[0].title}`);
+    }
+    prevNotifRef.current = unreadIds;
+    const chatSig = state.conversations
+      .map((c) => `${c.id}:${c.unread}:${c.lastAt ?? ""}`)
+      .sort()
+      .join("|");
+    if (prevChatRef.current && chatSig !== prevChatRef.current) {
+      const prevMap = new Map(
+        prevChatRef.current
+          .split("|")
+          .filter(Boolean)
+          .map((s) => {
+            const [id, unread] = s.split(":");
+            return [id, Number(unread || 0)] as const;
+          }),
+      );
+      for (const c of state.conversations) {
+        const before = prevMap.get(c.id) ?? 0;
+        if (c.unread > before) {
+          setToast(`💬 New message — open Chat`);
+          break;
+        }
+      }
+    }
+    prevChatRef.current = chatSig;
+  }, [state]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 4000);
@@ -258,6 +317,10 @@ export default function SkillLoop() {
   const me = state.me;
   const mePublic = state.users.find((u) => u.id === me.id)!;
   const unread = state.notifications.filter((n) => !n.read).length;
+  const chatUnread = state.conversations.reduce(
+    (n, c) => n + (c.unread || 0),
+    0,
+  );
   const pending = state.bookings.filter(
     (b) =>
       (b.status === "pending" && b.providerId === me.id) ||
@@ -272,7 +335,7 @@ export default function SkillLoop() {
     { id: "home", label: "Home", icon: House },
     { id: "requests", label: "Requests", icon: Inbox, count: pending },
     { id: "trade", label: "Trade", icon: ArrowLeftRight },
-    { id: "chat", label: "Chat", icon: MessageCircle },
+    { id: "chat", label: "Chat", icon: MessageCircle, count: chatUnread },
     { id: "leaderboard", label: "Leaderboard", icon: Trophy },
     { id: "profile", label: "My profile", icon: Users },
   ];
@@ -881,12 +944,25 @@ export default function SkillLoop() {
             panel === "learning" ||
             panel === "teaching" ||
             panel === "calendar" ? (
-            <RequestsPanel
-              state={state}
-              mode={panel}
-              onOpen={(b) => setDialog({ kind: "session", booking: b })}
-              onDiscover={() => go("home")}
-            />
+            <>
+              <div className="info-note" style={{ marginBottom: 14 }}>
+                <ShieldCheck size={18} />
+                <span>
+                  Requests live in this workspace only. If the other person
+                  can’t see your request, open{" "}
+                  <b>Demo → Generate shared workspace link</b> and have them
+                  join the same workspace — separate registrations create
+                  separate workspaces. Register once, then use <b>Login</b> with
+                  the same email/phone + password on any device.
+                </span>
+              </div>
+              <RequestsPanel
+                state={state}
+                mode={panel}
+                onOpen={(b) => setDialog({ kind: "session", booking: b })}
+                onDiscover={() => go("home")}
+              />
+            </>
           ) : panel === "trade" ? (
             <TradePanel
               state={state}
@@ -1016,6 +1092,7 @@ export default function SkillLoop() {
           </button>
         </div>
       )}
+      <IncomingCallModal state={state} act={act} />
       {dialog?.kind === "share-skill" && (
         <ShareSkill
           skills={state.skills.filter((skill) => skill.ownerId === me.id)}

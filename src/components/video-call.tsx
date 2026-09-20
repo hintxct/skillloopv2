@@ -1,24 +1,45 @@
 "use client";
 import { useState } from "react";
-import { Video, MonitorUp, PhoneOff, Maximize2, ExternalLink, ShieldCheck } from "lucide-react";
+import {
+  Video,
+  MonitorUp,
+  PhoneOff,
+  ExternalLink,
+  ShieldCheck,
+} from "lucide-react";
 import { Modal } from "./ui";
+
+export function jitsiUrlFor(roomName: string, displayName: string) {
+  const safeRoom =
+    roomName.replace(/[^a-zA-Z0-9-_]/g, "-").slice(0, 60) || "SkillLoop";
+  return `https://meet.jit.si/${encodeURIComponent(safeRoom)}#config.prejoinConfig.enabled=false&userInfo.displayName="${encodeURIComponent(displayName)}"&config.startWithVideoMuted=false&config.startWithAudioMuted=false`;
+}
 
 export function VideoCallButton({
   roomName,
   displayName,
   label = "Join video",
+  onRing,
 }: {
   roomName: string;
   displayName: string;
   label?: string;
+  onRing?: () => void;
 }) {
   const [open, setOpen] = useState(false);
-  const safeRoom = roomName.replace(/[^a-zA-Z0-9-_]/g, "-").slice(0, 60) || "SkillLoop";
-  const jitsiUrl = `https://meet.jit.si/${encodeURIComponent(safeRoom)}#config.prejoinConfig.enabled=false&userInfo.displayName="${encodeURIComponent(displayName)}"&config.startWithVideoMuted=false&config.startWithAudioMuted=false`;
+  const jitsiUrl = jitsiUrlFor(roomName, displayName);
 
   return (
     <>
-      <button className="button primary" onClick={() => setOpen(true)}>
+      <button
+        className="button primary"
+        onClick={() => {
+          setOpen(true);
+          try {
+            onRing?.();
+          } catch {}
+        }}
+      >
         <Video size={16} /> {label}
       </button>
       {open && (
@@ -41,7 +62,10 @@ export function VideoCallButton({
               >
                 Open in new tab <ExternalLink size={14} />
               </a>
-              <button className="button secondary" onClick={() => setOpen(false)}>
+              <button
+                className="button secondary"
+                onClick={() => setOpen(false)}
+              >
                 <PhoneOff size={14} /> Leave
               </button>
             </div>
@@ -50,11 +74,18 @@ export function VideoCallButton({
                 src={jitsiUrl}
                 allow="camera; microphone; display-capture; fullscreen; clipboard-read; clipboard-write"
                 title="Video call"
-                style={{ width: "100%", height: "520px", border: 0, borderRadius: 12 }}
+                style={{
+                  width: "100%",
+                  height: "520px",
+                  border: 0,
+                  borderRadius: 12,
+                }}
               />
             </div>
             <div className="video-hint">
-              <MonitorUp size={14} /> In the call, click <b>Share screen</b> (bottom toolbar) to present. Works like Zoom — camera, mic, screen share, chat, raise hand.
+              <MonitorUp size={14} /> In the call, click <b>Share screen</b>{" "}
+              (bottom toolbar) to present. Works like Zoom — camera, mic, screen
+              share, chat, raise hand.
             </div>
           </div>
         </Modal>
@@ -69,7 +100,11 @@ export function ScreenShareButton() {
 
   async function start() {
     try {
-      const s = await (navigator.mediaDevices as unknown as { getDisplayMedia: (o: unknown) => Promise<MediaStream> }).getDisplayMedia({
+      const s = await (
+        navigator.mediaDevices as unknown as {
+          getDisplayMedia: (o: unknown) => Promise<MediaStream>;
+        }
+      ).getDisplayMedia({
         video: true,
         audio: true,
       });
@@ -106,9 +141,16 @@ export function ScreenShareButton() {
             ref={(el) => {
               if (el && stream) el.srcObject = stream;
             }}
-            style={{ width: "100%", maxHeight: 240, borderRadius: 10, background: "#000" }}
+            style={{
+              width: "100%",
+              maxHeight: 240,
+              borderRadius: 10,
+              background: "#000",
+            }}
           />
-          <small className="muted small">Preview — others see via Jitsi screen share. Click Stop when done.</small>
+          <small className="muted small">
+            Preview — others see via Jitsi screen share. Click Stop when done.
+          </small>
         </div>
       )}
     </div>

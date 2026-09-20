@@ -142,14 +142,18 @@ export function Session({
           <Video size={18} /> Video call & screen share
         </h3>
         <p className="muted small">
-          Real-time video like Zoom — camera, mic and screen share in browser, no install. Same link for all
-          participants. Screen share via Jitsi toolbar.
+          Real-time video like Zoom — camera, mic and screen share in browser,
+          no install. Same link for all participants. Screen share via Jitsi
+          toolbar.
         </p>
         <div className="row">
           <VideoCallButton
             roomName={`SkillLoop-${b.circleId || b.id}`}
             displayName={state.me.name}
             label={b.circleId ? "Join group video" : "Join video call"}
+            onRing={() =>
+              act({ action: "call", bookingId: b.id }).catch(() => {})
+            }
           />
           <ScreenShareButton />
           {b.meeting ? (
@@ -164,7 +168,8 @@ export function Session({
           ) : null}
         </div>
         <small className="muted small">
-          Tip: Allow camera/mic when prompted. Use Jitsi&apos;s bottom bar → Share screen. Works for 1-to-1 and group (up to 3 in circle).
+          Tip: Allow camera/mic when prompted. Use Jitsi&apos;s bottom bar →
+          Share screen. Works for 1-to-1 and group (up to 3 in circle).
         </small>
       </div>
       <div className="session-actions">

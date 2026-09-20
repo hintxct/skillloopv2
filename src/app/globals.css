@@ -7031,3 +7031,67 @@ small,
 .chat-list-item.is-group.active {
   background: #a48bf51a;
 }
+.incoming-call-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  background: #09070dcc;
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  animation: incoming-in 0.25s ease-out;
+}
+@keyframes incoming-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.incoming-call-card {
+  width: min(420px, 94vw);
+  background: linear-gradient(145deg, #221e30, #1a1624);
+  border: 1px solid #a48bf550;
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  box-shadow: 0 24px 80px #000a;
+}
+.incoming-call-card.joining {
+  width: min(920px, 96vw);
+}
+.incoming-avatar {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+.ring-pulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid #a48bf5;
+  animation: ring-pulse 1.2s ease-out infinite;
+}
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+.incoming-call-card h2 {
+  font-size: 1.25rem;
+  margin: 8px 0 0;
+  color: #ede4f7;
+}
