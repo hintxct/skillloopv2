@@ -29,6 +29,8 @@ export interface Store {
 
 export function backendName() {
   if (process.env.DATABASE_URL) return "PostgreSQL · shared backend";
+  if (process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
+    return "Vercel Blob · persistent demo";
   if (process.env.VERCEL) return "In-memory · demo (ephemeral)";
   return "SQLite · local development";
 }
@@ -102,6 +104,62 @@ function memoryStore(): Store {
   };
 }
 
+function blobStore(): Store {
+  // Persistent demo on Vercel via Blob — survives across serverless instances and devices.
+  // Each record is a public JSON blob at skillloop/<kind>/<id>.json
+  const prefix = "skillloop";
+  return {
+    async get<T>(kind: string, id: string) {
+      try {
+        const { list } = await import("@vercel/blob");
+        const pathname = `${prefix}/${kind}/${id}.json`;
+        const { blobs } = await list({ prefix: pathname });
+        const blob = blobs.find((b) => b.pathname === pathname);
+        if (!blob) return null;
+        const res = await fetch(blob.url, { cache: "no-store" });
+        if (!res.ok) return null;
+        const row = (await res.json()) as Row;
+        if (
+          row.expires_at !== null &&
+          Number(row.expires_at) < Date.now()
+        ) {
+          try {
+            const { del } = await import("@vercel/blob");
+            await del(blob.url);
+          } catch {}
+          return null;
+        }
+        return JSON.parse(row.data) as T;
+      } catch {
+        return null;
+      }
+    },
+    async put(kind, id, value, expires) {
+      const { put } = await import("@vercel/blob");
+      const pathname = `${prefix}/${kind}/${id}.json`;
+      const row: Row = {
+        data: JSON.stringify(value),
+        expires_at: expires ?? null,
+      };
+      await put(pathname, JSON.stringify(row), {
+        access: "public",
+        contentType: "application/json",
+        addRandomSuffix: false,
+        allowOverwrite: true,
+      } as never);
+    },
+    async remove(kind, id) {
+      try {
+        const { list, del } = await import("@vercel/blob");
+        const pathname = `${prefix}/${kind}/${id}.json`;
+        const { blobs } = await list({ prefix: pathname });
+        const blob = blobs.find((b) => b.pathname === pathname);
+        if (blob) await del(blob.url);
+      } catch {}
+    },
+  };
+}
+
 function adapter(client: PoolClient | DatabaseSync, postgres: boolean): Store {
   async function query(sql: string, values: (string | number | null)[]) {
     if (postgres)
@@ -159,6 +217,19 @@ export async function transaction<T>(
       client.release();
     }
   }
+  if (process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) {
+    const previous = globals.slQueue ?? Promise.resolve();
+    let release!: () => void;
+    globals.slQueue = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await previous;
+    try {
+      return await work(blobStore());
+    } finally {
+      release();
+    }
+  }
   if (process.env.VERCEL) {
     // Ephemeral in-memory demo on Vercel without external DB.
     const previous = globals.slQueue ?? Promise.resolve();
@@ -203,6 +274,11 @@ export async function migrate() {
       await p.end();
       globals.slPool = undefined;
     }
+  } else if (
+    process.env.BLOB_READ_WRITE_TOKEN ||
+    process.env.BLOB_STORE_ID
+  ) {
+    // Blob needs no schema migration.
   } else if (process.env.VERCEL) {
     if (!globals.slMemory) globals.slMemory = new Map<string, Row>();
   } else {

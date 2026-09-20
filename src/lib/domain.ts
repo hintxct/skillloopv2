@@ -1521,6 +1521,13 @@ export function applyAction(
           room.bookings.push(b);
           conversation(room, [learner, s.ownerId], s.title, true, b.id);
         }
+        // Group chat for the whole circle — 3 members together
+        conversation(
+          room,
+          [...c.members].sort(),
+          `Trade Circle • ${c.members.length} learners`,
+          true
+        );
         c.status = "active";
       }
     }

@@ -21,6 +21,7 @@
     "node": ">=24.0.0 <25"
   },
   "dependencies": {
+    "@vercel/blob": "^2.8.0",
     "lucide-react": "1.47.0",
     "next": "16.3.5",
     "pg": "8.23.0",

@@ -10,10 +10,12 @@ import {
   MessageCircle,
   ShieldCheck,
   Coins,
+  Video,
 } from "lucide-react";
 import type { Booking, Snapshot } from "@/lib/types";
 import { money } from "@/lib/types";
 import { Avatar, dateTime, Field, localDate, Modal } from "./ui";
+import { VideoCallButton, ScreenShareButton } from "./video-call";
 import type { Mutate } from "./forms";
 
 export function Session({
@@ -135,6 +137,36 @@ export function Session({
           </span>
         </div>
       )}
+      <div className="video-call-section">
+        <h3>
+          <Video size={18} /> Video call & screen share
+        </h3>
+        <p className="muted small">
+          Real-time video like Zoom — camera, mic and screen share in browser, no install. Same link for all
+          participants. Screen share via Jitsi toolbar.
+        </p>
+        <div className="row">
+          <VideoCallButton
+            roomName={`SkillLoop-${b.circleId || b.id}`}
+            displayName={state.me.name}
+            label={b.circleId ? "Join group video" : "Join video call"}
+          />
+          <ScreenShareButton />
+          {b.meeting ? (
+            <a
+              className="button secondary"
+              href={b.meeting}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              External link <ExternalLink size={14} />
+            </a>
+          ) : null}
+        </div>
+        <small className="muted small">
+          Tip: Allow camera/mic when prompted. Use Jitsi&apos;s bottom bar → Share screen. Works for 1-to-1 and group (up to 3 in circle).
+        </small>
+      </div>
       <div className="session-actions">
         {canAccept && (
           <>

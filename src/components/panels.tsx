@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { VideoCallButton } from "./video-call";
 import {
   ArrowLeft,
   ArrowLeftRight,
@@ -774,6 +775,10 @@ export function ChatPanel({
   const other = c
     ? state.users.find((u) => c.members.includes(u.id) && u.id !== state.me.id)
     : undefined;
+  const isGroup = (c?.members.length ?? 0) > 2;
+  const others = c
+    ? state.users.filter((u) => c.members.includes(u.id) && u.id !== state.me.id)
+    : [];
   return (
     <div className={`chat-layout ${c ? "has-selection" : ""}`}>
       <aside className="chat-sidebar">
@@ -783,18 +788,31 @@ export function ChatPanel({
         </div>
         {state.conversations.length ? (
           state.conversations.map((item: ChatSummary) => {
+            const isGroupItem = item.members.length > 2;
             const person = state.users.find(
               (u) => item.members.includes(u.id) && u.id !== state.me.id,
             )!;
             return (
               <button
-                className={`chat-list-item ${selected === item.id ? "active" : ""}`}
+                className={`chat-list-item ${selected === item.id ? "active" : ""} ${isGroupItem ? "is-group" : ""}`}
                 key={item.id}
                 onClick={() => setSelected(item.id)}
               >
-                <Avatar user={person} size={40} />
+                {isGroupItem ? (
+                  <div className="avatar-stack" style={{ paddingLeft: 0 }}>
+                    {item.members
+                      .filter((id) => id !== state.me.id)
+                      .slice(0, 3)
+                      .map((id) => {
+                        const u = state.users.find((x) => x.id === id)!;
+                        return <Avatar key={id} user={u} size={32} />;
+                      })}
+                  </div>
+                ) : (
+                  <Avatar user={person} size={40} />
+                )}
                 <span>
-                  <strong>{person.name}</strong>
+                  <strong>{isGroupItem ? item.title : person.name}</strong>
                   <small>{item.lastMessage}</small>
                 </span>
                 {!!item.unread && <i>{item.unread}</i>}
@@ -822,14 +840,29 @@ export function ChatPanel({
               >
                 <ArrowLeft size={18} />
               </button>
-              <Avatar user={other} size={40} />
+              {isGroup ? (
+                <div className="avatar-stack" style={{ paddingLeft: 0 }}>
+                  {others.slice(0, 3).map((u) => (
+                    <Avatar key={u.id} user={u} size={32} />
+                  ))}
+                  {c.members.length > 4 && <i>+{c.members.length - 3}</i>}
+                </div>
+              ) : (
+                <Avatar user={other} size={40} />
+              )}
               <div>
-                <h3>{other?.name}</h3>
+                <h3>{isGroup ? c.title : other?.name}</h3>
                 <span>
-                  {c.accepted ? "Learning connection" : "Message request"} ·{" "}
-                  {other?.timezone}
+                  {isGroup
+                    ? `${c.members.length} members · ${c.accepted ? "Group" : "Invite"}`
+                    : `${c.accepted ? "Learning connection" : "Message request"} · ${other?.timezone}`}
                 </span>
               </div>
+              <VideoCallButton
+                roomName={`SkillLoop-${c.id}`}
+                displayName={state.me.name}
+                label={isGroup ? "Group video" : "Video"}
+              />
               <span className="badge purple">DEMO</span>
             </div>
             {!c.accepted && (
